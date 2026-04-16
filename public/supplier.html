@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supplier Portal | E-GARRAGE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --premium: #ffd700;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --border: #2a2a3a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #fff; min-height: 100vh; }
+    
+    /* Header */
+    header { background: var(--dark-secondary); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: 700; }
+    .logo span { color: var(--neon-blue); }
+    
+    /* Layout */
+    .portal { display: flex; min-height: calc(100vh - 70px); }
+    .sidebar { width: 260px; background: var(--dark-secondary); padding: 1.5rem 0; }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { padding: 0.8rem 1.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.8rem; }
+    .sidebar-menu li:hover, .sidebar-menu li.active { background: rgba(0, 212, 255, 0.1); color: var(--neon-blue); }
+    
+    .main { flex: 1; padding: 2rem; }
+    .page-title { font-size: 2rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem; }
+    .page-subtitle { color: #8892a0; margin-bottom: 2rem; }
+    
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; }
+    .stat-value { font-size: 2rem; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); }
+    .stat-label { color: #8892a0; margin-top: 0.5rem; }
+    
+    /* Orders Table */
+    .table-card { background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .table-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: var(--dark-secondary); color: #8892a0; }
+    .order-id { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); }
+    .status-badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; }
+    .status-new { background: rgba(0, 212, 255, 0.2); color: var(--neon-blue); }
+    .status-processing { background: rgba(255, 215, 0, 0.2); color: var(--premium); }
+    .status-shipped { background: rgba(0, 255, 136, 0.2); color: var(--neon-green); }
+    
+    /* Quick Actions */
+    .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+    .action-card { background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; text-align: center; cursor: pointer; transition: 0.3s; }
+    .action-card:hover { border-color: var(--neon-blue); transform: translateY(-3px); }
+    .action-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .action-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .action-desc { color: #8892a0; font-size: 0.9rem; }
+    
+    /* Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--dark-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow: auto; }
+    .modal-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
+    .modal-title { font-size: 1.5rem; font-family: 'Orbitron', sans-serif; }
+    .close-modal { background: none; border: none; color: #8892a0; font-size: 1.5rem; cursor: pointer; }
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; margin-bottom: 0.5rem; color: #8892a0; }
+    .form-input { width: 100%; padding: 0.8rem; background: var(--dark-secondary); border: 1px solid var(--border); border-radius: 8px; color: #fff; }
+    .btn-primary { padding: 0.8rem 2rem; background: var(--neon-blue); color: var(--dark); border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .actions-grid { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">E-<span>GARRAGE</span> Supplier</div>
+    <div>
+      <span style="color:#8892a0;">Global Supplies Ltd</span>
+      <span class="status-badge status-shipped" style="margin-left:1rem;">✓ Active</span>
+    </div>
+  </header>
+  
+  <div class="portal">
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="active" onclick="showPage('orders')">📦 Orders</li>
+        <li onclick="showPage('products')">📋 Products</li>
+        <li onclick="showPage('inventory')">📊 Inventory</li>
+        <li onclick="showPage('analytics')">📈 Analytics</li>
+        <li onclick="showPage('settings')">⚙️ Settings</li>
+      </ul>
+    </aside>
+    
+    <main class="main">
+      <h1 class="page-title">Supplier Dashboard</h1>
+      <p class="page-subtitle">Manage your dropshipping orders</p>
+      
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">47</div>
+          <div class="stat-label">New Orders</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">156</div>
+          <div class="stat-label">This Month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">$8,450</div>
+          <div class="stat-label">Revenue</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">98%</div>
+          <div class="stat-label">On-time</div>
+        </div>
+      </div>
+      
+      <!-- Pending Orders -->
+      <div class="table-card">
+        <div class="table-header">
+          <span>Pending Orders</span>
+          <button class="btn-primary" onclick="showModal('newOrderModal')">+ Process Order</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Order ID</th><th>Product</th><th>Qty</th><th>Customer</th><th>Status</th><th>Action</th></tr>
+          </thead>
+          <tbody id="ordersTable">
+            <tr>
+              <td class="order-id">#1024</td>
+              <td>Wireless Earbuds</td>
+              <td>5</td>
+              <td>John Smith, NY</td>
+              <td><span class="status-badge status-new">New</span></td>
+              <td><button class="btn-primary" style="padding:0.3rem 0.8rem;font-size:0.8rem;">Ship</button></td>
+            </tr>
+            <tr>
+              <td class="order-id">#1023</td>
+              <td>Smart Watch Pro</td>
+              <td>2</td>
+              <td>Sarah Johnson, CA</td>
+              <td><span class="status-badge status-processing">Processing</span></td>
+              <td><button class="btn-primary" style="padding:0.3rem 0.8rem;font-size:0.8rem;">Track</button></td>
+            </tr>
+            <tr>
+              <td class="order-id">#1022</td>
+              <td>Phone Case</td>
+              <td>10</td>
+              <td>Mike Davis, TX</td>
+              <td><span class="status-badge status-shipped">Shipped</span></td>
+              <td><button style="padding:0.3rem 0.8rem;font-size:0.8rem;background:var(--dark-secondary);border:1px solid var(--border);color:#8892a0;border-radius:4px;cursor:pointer;">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Quick Actions -->
+      <div class="actions-grid">
+        <div class="action-card" onclick="showModal('inventoryModal')">
+          <div class="action-icon">📦</div>
+          <div class="action-title">Update Inventory</div>
+          <div class="action-desc">Sync stock levels</div>
+        </div>
+        <div class="action-card" onclick="showModal('shippingModal')">
+          <div class="action-icon">🚚</div>
+          <div class="action-title">Shipping Labels</div>
+          <div class="action-desc">Generate labels</div>
+        </div>
+        <div class="action-card" onclick="showModal('returnModal')">
+          <div class="action-icon">↩️</div>
+          <div class="action-title">Returns</div>
+          <div class="action-desc">Handle returns</div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Inventory Modal -->
+  <div class="modal" id="inventoryModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Update Inventory</h3>
+        <button class="close-modal" onclick="closeModal('inventoryModal')">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Product</label>
+        <select class="form-input">
+          <option>Wireless Earbuds</option>
+          <option>Smart Watch Pro</option>
+          <option>Phone Case</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Quantity</label>
+        <input type="number" class="form-input" value="100">
+      </div>
+      <button class="btn-primary" onclick="saveInventory()">Update Stock</button>
+    </div>
+  </div>
+  
+  <script>
+    function showPage(page) {
+      console.log('Showing:', page);
+    }
+    
+    function showModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+    
+    function saveInventory() {
+      alert('Inventory updated!');
+      closeModal('inventoryModal');
+    }
+  </script>
+</body>
+</html>

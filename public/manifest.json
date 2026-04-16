@@ -1,0 +1,48 @@
+{
+  "name": "E-GARRAGE",
+  "short_name": "EGARRAGE",
+  "description": "Next-Gen Automotive Platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#00d4ff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["shopping", "automotive", "business"],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse Products",
+      "url": "/#products",
+      "icons": [{ "src": "/images/shortcut-products.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Track Order",
+      "url": "/track",
+      "icons": [{ "src": "/images/shortcut-track.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "My Profile",
+      "url": "/profile",
+      "icons": [{ "src": "/images/shortcut-profile.png", "sizes": "96x96" }]
+    }
+  ]
+}
