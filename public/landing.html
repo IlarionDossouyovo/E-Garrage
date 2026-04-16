@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-GARRAGE | Premium Automotive Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --premium: #ffd700;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --border: #2a2a3a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #fff; }
+    
+    /* Hero */
+    .hero { 
+      min-height: 90vh; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      position: relative;
+      background: linear-gradient(180deg, var(--dark) 0%, var(--dark-secondary) 100%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+    }
+    .hero-content { text-align: center; z-index: 1; max-width: 900px; padding: 2rem; }
+    
+    .hero-badge {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 255, 136, 0.2));
+      border: 1px solid var(--neon-blue);
+      border-radius: 30px;
+      color: var(--neon-blue);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+      50% { box-shadow: 0 0 20px 5px rgba(0, 212, 255, 0.2); }
+    }
+    
+    .hero h1 {
+      font-size: 5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #fff, var(--neon-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero h1 span { color: var(--neon-green); }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: #8892a0;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-desc {
+      font-size: 1.3rem;
+      color: #a0a8b8;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+    
+    /* CTA Buttons */
+    .hero-cta { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .btn { 
+      padding: 1rem 2.5rem; 
+      border-radius: 10px; 
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      font-family: 'Rajdhani', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-blue), #0099cc);
+      color: var(--dark);
+      box-shadow: 0 4px 30px rgba(0, 212, 255, 0.4);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(0, 212, 255, 0.6); }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--neon-blue);
+      color: var(--neon-blue);
+    }
+    .btn-outline:hover { background: var(--neon-blue); color: var(--dark); }
+    
+    /* Features Grid */
+    .features { padding: 6rem 2rem; max-width: 1400px; margin: 0 auto; }
+    .features-header { text-align: center; margin-bottom: 4rem; }
+    .features-header h2 {
+      font-size: 2.5rem;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 1rem;
+    }
+    .features-header h2 span { color: var(--neon-blue); }
+    .features-header p { color: #8892a0; font-size: 1.2rem; }
+    
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .feature-card {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .feature-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 10px 40px rgba(0, 212, 255, 0.15); }
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 255, 136, 0.2));
+      border: 2px solid var(--neon-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1.5rem;
+    }
+    .feature-card h3 { font-size: 1.3rem; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; }
+    .feature-card p { color: #8892a0; line-height: 1.7; }
+    
+    /* Services */
+    .services { padding: 6rem 2rem; background: var(--dark-secondary); }
+    .services h2 { text-align: center; font-size: 2.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 3rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+    .service-card {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .service-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .service-card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .service-card p { color: #8892a0; font-size: 0.9rem; }
+    
+    /* Testimonials */
+    .testimonials { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .testimonials h2 { text-align: center; font-size: 2.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 3rem; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .testimonial-card {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    .testimonial-card p { color: #a0a8b8; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+    .testimonial-avatar { width: 50px; height: 50px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .testimonial-name { font-weight: 600; }
+    .testimonial-role { color: #8892a0; font-size: 0.9rem; }
+    
+    /* CTA */
+    .cta-section {
+      padding: 6rem 2rem;
+      text-align: center;
+      background: linear-gradient(180deg, var(--dark-secondary), var(--dark));
+    }
+    .cta-section h2 { font-size: 3rem; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; }
+    .cta-section p { color: #8892a0; font-size: 1.2rem; margin-bottom: 2rem; }
+    
+    /* Footer */
+    footer { padding: 4rem 2rem; background: var(--dark-secondary); border-top: 1px solid var(--border); }
+    .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .footer-col h4 { color: var(--neon-blue); margin-bottom: 1rem; font-family: 'Orbitron', sans-serif; }
+    .footer-col a { display: block; color: #8892a0; text-decoration: none; margin-bottom: 0.5rem; transition: 0.3s; }
+    .footer-col a:hover { color: var(--neon-blue); transform: translateX(5px); }
+    .footer-bottom { max-width: 1200px; margin: 3rem auto 0; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; color: #8892a0; }
+    
+    @media (max-width: 1024px) {
+      .features-grid, .services-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .features-grid, .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🚀 Next-Gen Automotive Platform</div>
+      <h1>E-<span>GARRAGE</span></h1>
+      <div class="hero-subtitle">Intelligent Vehicle Solutions</div>
+      <p class="hero-desc">
+        AI-powered automotive ecosystem combining digital garage services, 
+        vehicle marketplace, intelligent diagnostics, and connected car technology.
+      </p>
+      <div class="hero-cta">
+        <a href="/" class="btn btn-primary">Browse Products</a>
+        <a href="/about" class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="features">
+    <div class="features-header">
+      <h2>Why Choose <span>E-GARRAGE</span></h2>
+      <p>Industry-leading technology for automotive excellence</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Diagnostics</h3>
+        <p>Advanced artificial intelligence provides instant, accurate vehicle diagnostics with 99.9% accuracy rate.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>Global Network</h3>
+        <p>Connect with 50,000+ verified partners, garages, and suppliers worldwide in one unified platform.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Services</h3>
+        <p>Real-time scheduling, parts sourcing, and automated dropshipping for minimal downtime.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Connected Car</h3>
+        <p>IoT integration enables real-time vehicle monitoring, maintenance alerts, and remote diagnostics.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛒</div>
+        <h3>Smart Marketplace</h3>
+        <p>Browse thousands of vehicles, parts, and accessories with AI-powered recommendations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💎</div>
+        <h3>Premium Support</h3>
+        <p>24/7 VIP support, priority service, and exclusive benefits for premium members.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="services">
+    <h2>Our <span style="color:var(--neon-blue)">Services</span></h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🚗</div>
+        <h4>Vehicle Sales</h4>
+        <p>New & Used Cars</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔧</div>
+        <h4>Repairs</h4>
+        <p>Expert Mechanics</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📦</div>
+        <h4>Parts</h4>
+        <p>Genuine OEM Parts</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚚</div>
+        <h4>Dropshipping</h4>
+        <p>Global Delivery</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="testimonials">
+    <h2>What Our <span style="color:var(--neon-blue)">Clients Say</span></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p>"E-GARRAGE transformed our garage operations. The AI diagnostics alone saved us hundreds of hours."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MK</div>
+          <div>
+            <div class="testimonial-name">Michael K.</div>
+            <div class="testimonial-role">Garage Owner, NYC</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p>"Best automotive platform I've used. The dropshipping feature is incredibly smooth and reliable."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SL</div>
+          <div>
+            <div class="testimonial-name">Sarah L.</div>
+            <div class="testimonial-role">Auto Parts Reseller</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p>"The connected car feature gives me peace of mind. I always know the health of my vehicles."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">JD</div>
+          <div>
+            <div class="testimonial-name">James D.</div>
+            <div class="testimonial-role">Fleet Manager</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta-section">
+    <h2>Ready to <span style="color:var(--neon-blue)">Transform</span> Your Auto Business?</h2>
+    <p>Join thousands of satisfied customers worldwide</p>
+    <a href="/contact" class="btn btn-primary" style="padding:1rem 3rem;">Get Started Today</a>
+  </section>
+  
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>E-GARRAGE</h4>
+        <p style="color:#8892a0;">Next-Gen Automotive Platform for the future of mobility.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#">Vehicle Sales</a>
+        <a href="#">Repairs</a>
+        <a href="#">Parts</a>
+        <a href="#">Dropshipping</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Refund</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 E-GARRAGE. All rights reserved. | Powered by AI
+    </div>
+  </footer>
+</body>
+</html>
