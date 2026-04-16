@@ -1,0 +1,4 @@
+nohup: ignoring input
+E-Garrage server running on http://localhost:3000
+Admin panel: http://localhost:3000/admin
+Dashboard: http://localhost:3000/dashboard

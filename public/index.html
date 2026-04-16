@@ -3,40 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E-Garrage | Premium E-Commerce & Dropshipping</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>E-GARRAGE | Next-Gen Automotive Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --secondary: #10b981;
-      --dark: #0f172a;
+      --primary: #00d4ff;
+      --primary-dark: #0099cc;
+      --secondary: #00ff88;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
       --light: #f8fafc;
       --gray: #64748b;
-      --border: #e2e8f0;
-      --premium: #f59e0b;
-      --premium-dark: #d97706;
+      --border: #2a2a3a;
+      --premium: #ffd700;
+      --premium-dark: #b8860b;
+      --accent-silver: #c0c0c0;
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    body { background: var(--light); color: var(--dark); line-height: 1.6; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #ffffff; line-height: 1.6; min-height: 100vh; }
+    
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, var(--dark) 0%, var(--dark-secondary) 100%);
+      z-index: -1;
+    }
     
     /* Header */
-    header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.08); position: fixed; width: 100%; top: 0; z-index: 1000; }
+    header { background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: fixed; width: 100%; top: 0; z-index: 1000; }
     .header-inner { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
-    .logo span { color: var(--secondary); }
+    
+    /* PREMIUM LOGO E-GARRAGE */
+    .logo { 
+      font-size: 1.8rem; 
+      font-weight: 900; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.3rem;
+      letter-spacing: 0.15em;
+    }
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+    .logo-E {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--neon-blue) 0%, #00ff88 50%, var(--neon-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+    }
+    .logo-text {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.2em;
+    }
+    .logo-shield {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+      background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%);
+    }
     nav { display: flex; gap: 2rem; align-items: center; }
     nav a { text-decoration: none; color: var(--gray); font-weight: 500; transition: 0.3s; }
     nav a:hover { color: var(--primary); }
     .header-actions { display: flex; gap: 1rem; align-items: center; }
     
     .btn { padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; cursor: pointer; transition: 0.3s; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:hover { background: var(--primary-dark); }
-    .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
-    .btn-outline:hover { background: var(--primary); color: white; }
-    .btn-premium { background: linear-gradient(135deg, var(--premium), var(--premium-dark)); color: white; }
-    .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
+    .btn-primary { 
+      background: linear-gradient(135deg, var(--neon-blue), #0099cc); 
+      color: var(--dark); 
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    }
+    .btn-primary:hover { 
+      background: linear-gradient(135deg, #00d4ff, #00ff88); 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0, 212, 255, 0.5);
+    }
+    .btn-outline { 
+      border: 2px solid var(--neon-blue); 
+      color: var(--neon-blue); 
+      background: transparent; 
+    }
+    .btn-outline:hover { 
+      background: var(--neon-blue); 
+      color: var(--dark);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+    .btn-premium { 
+      background: linear-gradient(135deg, var(--premium), var(--premium-dark)); 
+      color: var(--dark); 
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+    }
+    .btn-premium:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+    }
     
     .cart-btn { position: relative; }
     .cart-count { position: absolute; top: -8px; right: -8px; background: var(--secondary); color: white; font-size: 0.7rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -44,9 +130,51 @@
     .badge-premium { background: linear-gradient(135deg, var(--premium), var(--premium-dark)); color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
     
     /* Hero */
-    .hero { background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%); color: white; padding: 8rem 2rem 4rem; text-align: center; }
-    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
-    .hero p { font-size: 1.2rem; color: #94a3b8; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero { 
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark-secondary) 50%, #0d0d15 100%); 
+      color: white; 
+      padding: 10rem 2rem 5rem; 
+      text-align: center; 
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero h1 { 
+      font-size: 4rem; 
+      margin-bottom: 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #ffffff, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .hero p { 
+      font-size: 1.1rem; 
+      color: #8892a0; 
+      margin-bottom: 2.5rem; 
+      max-width: 600px; 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
     .hero-buttons { display: flex; gap: 1rem; justify-content: center; }
     .hero-stats { display: flex; gap: 3rem; justify-content: center; margin-top: 3rem; }
     .stat { text-align: center; }
@@ -56,23 +184,83 @@
     /* Products */
     .products-section { padding: 4rem 2rem; max-width: 1400px; margin: 0 auto; }
     .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-    .section-title { font-size: 1.8rem; }
+    .section-title { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; font-weight: 700; }
+    .section-title span { color: var(--neon-blue); }
     .filters { display: flex; gap: 1rem; }
-    .filter-btn { padding: 0.5rem 1rem; border: 2px solid var(--border); background: white; border-radius: 20px; cursor: pointer; transition: 0.3s; }
-    .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .filter-btn { 
+      padding: 0.5rem 1rem; 
+      border: 2px solid var(--border); 
+      background: var(--dark-card); 
+      color: #8892a0;
+      border-radius: 20px; 
+      cursor: pointer; 
+      transition: 0.3s;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .filter-btn.active { 
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green)); 
+      color: var(--dark); 
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+    .filter-btn:hover { 
+      border-color: var(--neon-blue); 
+      color: var(--neon-blue);
+    }
     
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
-    .product-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: 0.3s; }
-    .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-    .product-image { height: 200px; background: linear-gradient(135deg, #e2e8f0, #cbd5e1); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .product-card { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border);
+      border-radius: 16px; 
+      overflow: hidden; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3); 
+      transition: 0.3s; 
+    }
+    .product-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15);
+      border-color: var(--neon-blue);
+    }
+    .product-image { 
+      height: 200px; 
+      background: linear-gradient(135deg, var(--dark-secondary), var(--dark-card)); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 4rem; 
+      position: relative;
+    }
+    .product-image::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 40%, rgba(0, 212, 255, 0.1) 50%, transparent 60%);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
     .product-info { padding: 1.5rem; }
-    .product-category { color: var(--secondary); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .product-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .product-category { color: var(--neon-green); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.1em; font-family: 'Rajdhani', sans-serif; }
+    .product-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; font-family: 'Rajdhani', sans-serif; }
     .product-desc { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
     .product-footer { display: flex; justify-content: space-between; align-items: center; }
-    .product-price { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+    .product-price { font-size: 1.3rem; font-weight: 700; color: var(--neon-blue); font-family: 'Orbitron', sans-serif; }
     .product-stock { font-size: 0.8rem; color: var(--gray); }
-    .dropship-badge { background: var(--secondary); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .dropship-badge { 
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green)); 
+      color: var(--dark); 
+      padding: 0.2rem 0.5rem; 
+      border-radius: 4px; 
+      font-size: 0.7rem; 
+      font-weight: 600; 
+    }
     
     /* Cart Modal */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
@@ -106,16 +294,28 @@
     .tab.active { border-bottom-color: var(--primary); color: var(--primary); }
     
     /* Footer */
-    footer { background: var(--dark); color: white; padding: 4rem 2rem; }
+    footer { background: var(--dark-secondary); color: white; padding: 4rem 2rem; border-top: 1px solid var(--border); }
     .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-    .footer-col h3 { margin-bottom: 1rem; color: var(--secondary); }
-    .footer-col a { display: block; color: #94a3b8; text-decoration: none; margin-bottom: 0.5rem; transition: 0.3s; }
-    .footer-col a:hover { color: white; }
-    .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid #334155; text-align: center; color: #94a3b8; }
+    .footer-col h3 { 
+      margin-bottom: 1rem; 
+      color: var(--neon-blue); 
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+    .footer-col a { display: block; color: #8892a0; text-decoration: none; margin-bottom: 0.8rem; transition: 0.3s; }
+    .footer-col a:hover { color: var(--neon-blue); transform: translateX(5px); }
+    .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; color: #8892a0; }
     
     /* Premium Banner */
-    .premium-banner { background: linear-gradient(135deg, var(--premium), var(--premium-dark)); color: white; padding: 1rem 2rem; text-align: center; }
-    .premium-banner a { color: white; font-weight: 600; }
+    .premium-banner { 
+      background: linear-gradient(135deg, var(--premium), var(--premium-dark)); 
+      color: var(--dark); 
+      padding: 1rem 2rem; 
+      text-align: center;
+      font-weight: 600;
+    }
+    .premium-banner a { color: var(--dark); font-weight: 700; text-decoration: underline; }
     
     @media (max-width: 768px) {
       .hero h1 { font-size: 2rem; }
@@ -131,7 +331,42 @@
   
   <header>
     <div class="header-inner">
-      <div class="logo">E-<span>Garrage</span></div>
+      <div class="logo">
+        <div class="logo-icon">
+          <div class="logo-shield"></div>
+          <!-- E-GARRAGE Circuit Logo Icon -->
+          <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="50%" stop-color="#00ff88"/>
+                <stop offset="100%" stop-color="#00d4ff"/>
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- Circuit E Shape -->
+            <path d="M8 12 L8 8 L25 8 L25 12 L20 12 L20 25 L35 25 L35 20 L30 20 L30 12 L42 12 L42 8 L25 8 L25 17 L12 17 L12 30 L17 30 L17 35 L12 35 L12 42 L8 42 L8 35 L8 12Z" 
+                  stroke="url(#logoGrad)" stroke-width="2" fill="none" filter="url(#glow)"/>
+            <!-- Center Shield -->
+            <path d="M25 22 L30 18 L38 18 L42 22 L42 32 L38 38 L30 38 L25 34 L20 38 L12 32 L12 22 L20 18 L25 22Z" 
+                  stroke="url(#logoGrad)" stroke-width="1.5" fill="rgba(0,212,255,0.1)" filter="url(#glow)"/>
+            <!-- Tech dots -->
+            <circle cx="17" cy="15" r="2" fill="#00d4ff"/>
+            <circle cx="33" cy="15" r="2" fill="#00d4ff"/>
+            <circle cx="17" cy="35" r="2" fill="#00ff88"/>
+            <circle cx="33" cy="35" r="2" fill="#00ff88"/>
+            <!-- Speed lines -->
+            <path d="M8 25 L5 25 M42 25 L45 25" stroke="#00d4ff" stroke-width="1" opacity="0.6"/>
+          </svg>
+        </div>
+        <span class="logo-E">E</span><span class="logo-text">GARRAGE</span>
+      </div>
       <nav>
         <a href="#products">Products</a>
         <a href="#about">About</a>
@@ -156,31 +391,32 @@
   </header>
   
   <section class="hero">
-    <h1>Premium E-Commerce & Dropshipping</h1>
-    <p>Build your online business with E-Garrage. Quality products, automated dropshipping, and powerful analytics.</p>
+    <h1>E-GARRAGE</h1>
+    <div class="hero-subtitle">Next-Gen Automotive Platform</div>
+    <p>AI-powered automotive ecosystem combining digital garage services, vehicle marketplace, intelligent diagnostics, and connected car technology.</p>
     <div class="hero-buttons">
       <a href="#products" class="btn btn-primary">Browse Products</a>
       <a href="#about" class="btn btn-outline" style="border-color:white;color:white;">Learn More</a>
     </div>
     <div class="hero-stats">
       <div class="stat">
-        <div class="stat-number">500+</div>
-        <div class="stat-label">Products Available</div>
+        <div class="stat-number" style="color:var(--neon-blue)">50K+</div>
+        <div class="stat-label">Vehicles Listed</div>
       </div>
       <div class="stat">
-        <div class="stat-number">50+</div>
-        <div class="stat-label">Dropshipping Suppliers</div>
+        <div class="stat-number" style="color:var(--neon-green)">500+</div>
+        <div class="stat-label">AI Diagnostics/day</div>
       </div>
       <div class="stat">
-        <div class="stat-number">10K+</div>
-        <div class="stat-label">Happy Customers</div>
+        <div class="stat-number" style="color:var(--premium)">99.9%</div>
+        <div class="stat-label">Accuracy Rate</div>
       </div>
     </div>
   </section>
   
   <section class="products-section" id="products">
     <div class="section-header">
-      <h2 class="section-title">Featured Products</h2>
+      <h2 class="section-title"><span>●</span> Featured Products</h2>
       <div class="filters">
         <button class="filter-btn active" onclick="filterProducts('all')">All</button>
         <button class="filter-btn" onclick="filterProducts('Electronics')">Electronics</button>
