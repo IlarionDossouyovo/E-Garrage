@@ -1,6 +1,12 @@
-# E-Garrage - E-Commerce & Dropshipping Platform
+# 🚗 E-GARRAGE - Next-Gen Automotive Platform
 
-A complete e-commerce and dropshipping platform for managing online stores, products, suppliers, and automated order fulfillment.
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-2.0-00d4ff?style=for-the-badge">
+  <img src="https://img.shields.io/badge/AI-Agents-00ff88?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Platform-E--Commerce-ffd700?style=for-the-badge">
+</p>
+
+A complete e-commerce and dropshipping platform with AI Agents automation.
 
 ## Features
 

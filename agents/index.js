@@ -3,7 +3,21 @@
  * Multi-agent automation for business operations
  */
 
-const db = require('./db');
+// Simple in-memory data (no external db dependency)
+const inMemoryDB = {
+  orders: [],
+  products: [
+    { id: 1, name: 'Wireless Earbuds', price: 49.99, category: 'Electronics', stock: 100 },
+    { id: 2, name: 'Smart Watch Pro', price: 89.99, category: 'Electronics', stock: 50 },
+    { id: 3, name: 'Phone Case', price: 19.99, category: 'Accessories', stock: 200 },
+    { id: 4, name: 'USB-C Cable', price: 12.99, category: 'Accessories', stock: 300 },
+    { id: 5, name: 'Power Bank', price: 39.99, category: 'Electronics', stock: 80 },
+    { id: 6, name: 'Webcam HD', price: 59.99, category: 'Electronics', stock: 40 },
+    { id: 7, name: 'Wireless Mouse', price: 24.99, category: 'Electronics', stock: 150 },
+    { id: 8, name: 'LED Lamp', price: 29.99, category: 'Home', stock: 60 }
+  ],
+  users: []
+};
 
 // ============ AGENT TYPES ============
 const AGENT_TYPES = {
@@ -43,6 +57,14 @@ function logAgent(agentType, action, details) {
   
   return log;
 }
+
+// Simulate database query
+const query = (sql, params) => {
+  if (sql.includes('orders')) return Promise.resolve(inMemoryDB.orders);
+  if (sql.includes('products')) return Promise.resolve(inMemoryDB.products);
+  if (sql.includes('users')) return Promise.resolve(inMemoryDB.users);
+  return Promise.resolve([]);
+};
 
 // ============ CUSTOMER SERVICE AGENT ============
 async function runCustomerServiceAgent(input) {
@@ -89,7 +111,7 @@ async function runOrderAgent(orderId, action, data) {
   
   try {
     // Simulate order processing
-    const result = await db.query('SELECT * FROM orders WHERE id = ?', [orderId]);
+    const result = await query('SELECT * FROM orders WHERE id = ?', [orderId]);
     
     let response = '';
     
@@ -134,7 +156,7 @@ async function runOrderAgent(orderId, action, data) {
 // ============ INVENTORY AGENT ============
 async function runInventoryAgent(action, productId) {
   try {
-    const products = await db.query('SELECT * FROM products', []);
+    const products = await query('SELECT * FROM products', []);
     let alerts = [];
     let restockNeeded = [];
     
@@ -188,8 +210,8 @@ async function runInventoryAgent(action, productId) {
 // ============ SALES AGENT ============
 async function runSalesAgent(userId, type) {
   try {
-    const products = await db.query('SELECT * FROM products', []);
-    const userOrders = userId ? await db.query('SELECT * FROM orders WHERE user_id = ?', [userId]) : [];
+    const products = await query('SELECT * FROM products', []);
+    const userOrders = userId ? await query('SELECT * FROM orders WHERE user_id = ?', [userId]) : [];
     
     let recommendations = [];
     let message = '';
@@ -241,9 +263,9 @@ async function runSalesAgent(userId, type) {
 // ============ ANALYTICS AGENT ============
 async function runAnalyticsAgent(period) {
   try {
-    const orders = await db.query('SELECT * FROM orders', []);
-    const products = await db.query('SELECT * FROM products', []);
-    const users = await db.query('SELECT * FROM users', []);
+    const orders = await query('SELECT * FROM orders', []);
+    const products = await query('SELECT * FROM products', []);
+    const users = await query('SELECT * FROM users', []);
     
     // Calculate metrics
     const totalRevenue = orders.reduce((s, o) => s + o.total, 0);

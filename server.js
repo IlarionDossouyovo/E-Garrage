@@ -414,6 +414,39 @@ app.get('/agents', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'agents.html'));
 });
 
+app.get('/chat', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'chat.html'));
+});
+
+// ============ WEBHOOKS API ============
+app.post('/api/webhooks', (req, res) => {
+  const { url, events } = req.body;
+  
+  if (!url) {
+    return res.status(400).json({ success: false, message: 'URL required' });
+  }
+  
+  // Simulate webhook registration
+  const webhook = {
+    id: Date.now(),
+    url,
+    events: events || ['order.created'],
+    created_at: new Date().toISOString()
+  };
+  
+  res.json({ success: true, webhook, message: 'Webhook registered' });
+});
+
+// Trigger webhook
+app.post('/api/webhooks/trigger', async (req, res) => {
+  const { event, data } = req.body;
+  
+  // Simulate triggering webhooks
+  console.log(`🔗 Webhook triggered: ${event}`, data);
+  
+  res.json({ success: true, message: `Webhook ${event} triggered` });
+});
+
 // ============ AI AGENTS API ============
 const agents = require('./agents');
 
