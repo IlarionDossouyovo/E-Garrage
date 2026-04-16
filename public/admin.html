@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Garrage Admin | Premium Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #2563eb; --success: #10b981; --danger: #ef4444; --dark: #0f172a; --light: #f8fafc; --gray: #64748b; --border: #e2e8f0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: var(--light); color: var(--dark); }
+    
+    .admin-layout { display: flex; min-height: 100vh; }
+    
+    /* Sidebar */
+    .sidebar { width: 260px; background: var(--dark); color: white; padding: 1.5rem 0; position: fixed; height: 100%; }
+    .sidebar-logo { padding: 0 1.5rem; font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; }
+    .sidebar-logo span { color: var(--success); }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { padding: 0.8rem 1.5rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 0.8rem; }
+    .sidebar-menu li:hover, .sidebar-menu li.active { background: rgba(255,255,255,0.1); }
+    .sidebar-menu li.active { border-left: 3px solid var(--success); }
+    
+    /* Main */
+    .main { flex: 1; margin-left: 260px; padding: 2rem; }
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+    .page-title { font-size: 1.8rem; }
+    
+    /* Cards */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .stat-label { color: var(--gray); font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .stat-value { font-size: 2rem; font-weight: 700; }
+    .stat-card.success .stat-value { color: var(--success); }
+    .stat-card.primary .stat-value { color: var(--primary); }
+    
+    /* Tables */
+    .table-card { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
+    .table-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: var(--light); font-weight: 600; }
+    .status-badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; }
+    .status-badge.active { background: #d1fae5; color: #065f46; }
+    .status-badge.pending { background: #fef3c7; color: #92400e; }
+    .status-badge.shipped { background: #dbeafe; color: #1e40af; }
+    
+    .btn { padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: 500; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-success { background: var(--success); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.85rem; }
+    
+    /* Forms */
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .form-group { }
+    .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    .form-input { width: 100%; padding: 0.6rem; border: 2px solid var(--border); border-radius: 6px; }
+    
+    /* Tabs */
+    .tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+    .tab { padding: 0.6rem 1.2rem; background: white; border-radius: 8px; cursor: pointer; border: 2px solid transparent; }
+    .tab.active { border-color: var(--primary); color: var(--primary); }
+    
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">E-<span>Garrage</span> Admin</div>
+      <ul class="sidebar-menu">
+        <li class="active" onclick="showPage('dashboard')">📊 Dashboard</li>
+        <li onclick="showPage('products')">📦 Products</li>
+        <li onclick="showPage('orders')">🛒 Orders</li>
+        <li onclick="showPage('suppliers')">🚚 Suppliers</li>
+        <li onclick="showPage('analytics')">📈 Analytics (Premium)</li>
+        <li onclick="showPage('users')">👥 Users</li>
+      </ul>
+    </aside>
+    
+    <main class="main">
+      <div class="page-header">
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        <div>
+          <span style="color:var(--gray);">Welcome, Admin</span>
+        </div>
+      </div>
+      
+      <!-- Dashboard Page -->
+      <div id="dashboardPage" class="tab-content active">
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-label">Total Revenue</div>
+            <div class="stat-value" id="statRevenue">$0.00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Orders</div>
+            <div class="stat-value" id="statOrders">0</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-label">Products</div>
+            <div class="stat-value" id="statProducts">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Suppliers</div>
+            <div class="stat-value" id="statSuppliers">0</div>
+          </div>
+        </div>
+        
+        <div class="table-card">
+          <div class="table-header">Recent Orders</div>
+          <table>
+            <thead>
+              <tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th><th>Action</th></tr>
+            </thead>
+            <tbody id="recentOrders"></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Products Page -->
+      <div id="productsPage" class="tab-content">
+        <div class="table-card">
+          <div class="table-header">
+            <span>Products</span>
+            <button class="btn btn-primary" onclick="showAddProduct()">+ Add Product</button>
+          </div>
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Dropship</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="productsList"></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Orders Page -->
+      <div id="ordersPage" class="tab-content">
+        <div class="table-card">
+          <div class="table-header">All Orders</div>
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Tracking</th><th>Date</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="ordersList"></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Suppliers Page -->
+      <div id="suppliersPage" class="tab-content">
+        <div class="table-card">
+          <div class="table-header">
+            <span>Suppliers / Dropshipping</span>
+            <button class="btn btn-primary" onclick="showAddSupplier()">+ Add Supplier</button>
+          </div>
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="suppliersList"></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Analytics Page (Premium) -->
+      <div id="analyticsPage" class="tab-content">
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-label">Revenue (7 days)</div>
+            <div class="stat-value" id="analyticsRevenue">$0.00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Orders (7 days)</div>
+            <div class="stat-value" id="analyticsOrders">0</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-label">Dropship Orders</div>
+            <div class="stat-value" id="analyticsDropship">0</div>
+          </div>
+        </div>
+        
+        <div class="table-card">
+          <div class="table-header">Top Products</div>
+          <table>
+            <thead>
+              <tr><th>Product</th><th>Units Sold</th><th>Revenue</th></tr>
+            </thead>
+            <tbody id="topProducts"></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Users Page -->
+      <div id="usersPage" class="tab-content">
+        <div class="table-card">
+          <div class="table-header">Users</div>
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Premium</th><th>Joined</th></tr>
+            </thead>
+            <tbody id="usersList"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Add Product Modal -->
+  <div class="modal" id="productModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+    <div style="background:white;border-radius:12px;padding:2rem;width:400px;">
+      <h3 style="margin-bottom:1rem;">Add Product</h3>
+      <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="pName"></div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" id="pDesc"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Price</label><input class="form-input" id="pPrice" type="number" step="0.01"></div>
+        <div class="form-group"><label class="form-label">Cost</label><input class="form-input" id="pCost" type="number" step="0.01"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Category</label><input class="form-input" id="pCategory"></div>
+        <div class="form-group"><label class="form-label">Stock</label><input class="form-input" id="pStock" type="number"></div>
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" id="pDropship"> Enable Dropshipping</label>
+      </div>
+      <div style="display:flex;gap:1rem;margin-top:1rem;">
+        <button class="btn btn-primary" onclick="addProduct()">Save</button>
+        <button class="btn" onclick="document.getElementById('productModal').style.display='none'">Cancel</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    let products = [], orders = [], suppliers = [], users = [];
+    const token = localStorage.getItem('token');
+    
+    async function loadData() {
+      if (!token) { alert('Please login first'); window.location.href = '/admin'; return; }
+      
+      const auth = { headers: { 'Authorization': 'Bearer ' + token } };
+      
+      const [pRes, oRes, sRes, uRes, aRes] = await Promise.all([
+        fetch('/api/products', auth),
+        fetch('/api/orders', auth),
+        fetch('/api/suppliers', auth),
+        fetch('https://api.github.com/repos/IlarionDossouyovo/E-Garrage'),
+        fetch('/api/analytics', auth).catch(() => ({ json: () => ({}) }))
+      ]);
+      
+      products = await fetch('/api/products').then(r => r.json());
+      orders = await fetch('/api/orders', auth).then(r => r.json()).catch(() => []);
+      suppliers = await fetch('/api/suppliers', auth).then(r => r.json()).catch(() => []);
+      
+      renderDashboard();
+      renderProducts();
+      renderOrders();
+      renderSuppliers();
+      renderAnalytics();
+      renderUsers();
+    }
+    
+    function renderDashboard() {
+      document.getElementById('statRevenue').textContent = '$' + orders.reduce((s, o) => s + o.total, 0).toFixed(2);
+      document.getElementById('statOrders').textContent = orders.length;
+      document.getElementById('statProducts').textContent = products.length;
+      document.getElementById('statSuppliers').textContent = suppliers.length;
+      
+      document.getElementById('recentOrders').innerHTML = orders.slice(0, 5).map(o => `
+        <tr>
+          <td>#${o.id}</td>
+          <td>${o.username || 'User ' + o.user_id}</td>
+          <td>$${o.total.toFixed(2)}</td>
+          <td><span class="status-badge ${o.status}">${o.status}</span></td>
+          <td>${new Date(o.created_at).toLocaleDateString()}</td>
+          <td><button class="btn btn-sm btn-primary" onclick="viewOrder(${o.id})">View</button></td>
+        </tr>
+      `).join('') || '<tr><td colspan="6">No orders yet</td></tr>';
+    }
+    
+    function renderProducts() {
+      document.getElementById('productsList').innerHTML = products.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>${p.category}</td>
+          <td>$${p.price.toFixed(2)}</td>
+          <td>${p.stock}</td>
+          <td>${p.isDropshipping ? '✓' : '-'}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    
+    function renderOrders() {
+      document.getElementById('ordersList').innerHTML = orders.map(o => `
+        <tr>
+          <td>#${o.id}</td>
+          <td>${o.username || 'User ' + o.user_id}</td>
+          <td>$${o.total.toFixed(2)}</td>
+          <td><span class="status-badge ${o.status}">${o.status}</span></td>
+          <td>${o.tracking_number || '-'}</td>
+          <td>${new Date(o.created_at).toLocaleDateString()}</td>
+          <td>
+            <button class="btn btn-sm btn-success" onclick="updateOrderStatus(${o.id}, 'shipped')">Ship</button>
+          </td>
+        </tr>
+      `).join('') || '<tr><td colspan="7">No orders</td></tr>';
+    }
+    
+    function renderSuppliers() {
+      document.getElementById('suppliersList').innerHTML = suppliers.map(s => `
+        <tr>
+          <td>${s.id}</td>
+          <td>${s.name}</td>
+          <td>${s.email || '-'}</td>
+          <td>${s.phone || '-'}</td>
+          <td><span class="status-badge ${s.status}">${s.status}</span></td>
+          <td>
+            <button class="btn btn-sm btn-danger" onclick="deleteSupplier(${s.id})">Delete</button>
+          </td>
+        </tr>
+      `).join('') || '<tr><td colspan="6">No suppliers</td></tr>';
+    }
+    
+    async function renderAnalytics() {
+      try {
+        const auth = { headers: { 'Authorization': 'Bearer ' + token } };
+        const res = await fetch('/api/analytics', auth);
+        const data = await res.json();
+        
+        document.getElementById('analyticsRevenue').textContent = '$' + (data.revenue || 0).toFixed(2);
+        document.getElementById('analyticsOrders').textContent = data.orders || 0;
+        document.getElementById('analyticsDropship').textContent = data.topProducts?.length || 0;
+        
+        document.getElementById('topProducts').innerHTML = (data.topProducts || []).map(p => `
+          <tr><td>${p.name}</td><td>${p.sold}</td><td>$${(p.revenue || 0).toFixed(2)}</td></tr>
+        `).join('') || '<tr><td colspan="3">No data</td></tr>';
+      } catch (e) {
+        console.log('Analytics not available');
+      }
+    }
+    
+    function renderUsers() {
+      document.getElementById('usersList').innerHTML = users.map(u => `
+        <tr>
+          <td>${u.id}</td>
+          <td>${u.username}</td>
+          <td>${u.email}</td>
+          <td>${u.role}</td>
+          <td>${u.isPremium ? '✓ Premium' : '-'}</td>
+          <td>${new Date(u.created_at).toLocaleDateString()}</td>
+        </tr>
+      `).join('') || '<tr><td colspan="6">No users</td></tr>';
+    }
+    
+    function showPage(page) {
+      document.querySelectorAll('.sidebar-menu li').forEach(l => l.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById(page + 'Page').classList.add('active');
+      document.getElementById('pageTitle').textContent = page.charAt(0).toUpperCase() + page.slice(1);
+    }
+    
+    function showAddProduct() { document.getElementById('productModal').style.display = 'flex'; }
+    
+    async function addProduct() {
+      const name = document.getElementById('pName').value;
+      const description = document.getElementById('pDesc').value;
+      const price = parseFloat(document.getElementById('pPrice').value);
+      const cost = parseFloat(document.getElementById('pCost').value);
+      const category = document.getElementById('pCategory').value;
+      const stock = parseInt(document.getElementById('pStock').value);
+      const isDropshipping = document.getElementById('pDropship').checked;
+      
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ name, description, price, cost, category, stock, isDropshipping })
+      });
+      
+      if (res.ok) {
+        alert('Product added!');
+        document.getElementById('productModal').style.display = 'none';
+        products = await fetch('/api/products').then(r => r.json());
+        renderProducts();
+      }
+    }
+    
+    async function deleteProduct(id) {
+      if (confirm('Delete this product?')) {
+        await fetch('/api/products/' + id, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token } });
+        products = products.filter(p => p.id !== id);
+        renderProducts();
+      }
+    }
+    
+    function showAddSupplier() { alert('Use API to add suppliers'); }
+    async function deleteSupplier(id) {
+      if (confirm('Delete this supplier?')) {
+        await fetch('/api/suppliers/' + id, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token } });
+        suppliers = suppliers.filter(s => s.id !== id);
+        renderSuppliers();
+      }
+    }
+    
+    async function updateOrderStatus(id, status) {
+      await fetch('/api/orders/' + id + '/status', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ status })
+      });
+      orders = await fetch('/api/orders', { headers: { 'Authorization': 'Bearer ' + token } }).then(r => r.json());
+      renderOrders();
+    }
+    
+    function viewOrder(id) { alert('Order #' + id); }
+    
+    loadData();
+  </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Garrage Dashboard | My Orders</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #2563eb; --success: #10b981; --dark: #0f172a; --light: #f8fafc; --gray: #64748b; --border: #e2e8f0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: var(--light); color: var(--dark); }
+    
+    .dash-header { background: white; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+    .logo span { color: var(--success); }
+    
+    .dash-container { max-width: 1000px; margin: 2rem auto; padding: 0 2rem; }
+    .welcome-section { background: linear-gradient(135deg, var(--primary), #1d4ed8); color: white; padding: 2rem; border-radius: 16px; margin-bottom: 2rem; }
+    .welcome-section h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .welcome-section p { opacity: 0.9; }
+    
+    .premium-box { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; }
+    .premium-box h3 { margin-bottom: 0.5rem; }
+    .premium-box ul { list-style: none; margin-top: 1rem; }
+    .premium-box li { margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .premium-box li::before { content: "✓"; font-weight: bold; }
+    
+    .section-title { font-size: 1.3rem; margin-bottom: 1rem; }
+    
+    .orders-grid { display: grid; gap: 1rem; }
+    .order-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .order-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+    .order-id { font-weight: 600; }
+    .order-status { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; }
+    .order-status.pending { background: #fef3c7; color: #92400e; }
+    .order-status.shipped { background: #dbeafe; color: #1e40af; }
+    .order-status.delivered { background: #d1fae5; color: #065f46; }
+    .order-total { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+    .order-address { color: var(--gray); font-size: 0.9rem; margin-top: 0.5rem; }
+    .order-tracking { margin-top: 0.5rem; font-size: 0.9rem; }
+    
+    .empty-state { text-align: center; padding: 3rem; color: var(--gray); }
+    .empty-state p { margin-bottom: 1rem; }
+    
+    .btn { padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; border: none; font-weight: 500; text-decoration: none; display: inline-block; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+    .btn-premium { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+  </style>
+</head>
+<body>
+  <header class="dash-header">
+    <div class="logo">E-<span>Garrage</span></div>
+    <nav>
+      <a href="/" class="btn btn-outline">Shop</a>
+      <span id="userInfo" style="margin: 0 1rem;"></span>
+      <button class="btn btn-outline" onclick="logout()">Logout</button>
+    </nav>
+  </header>
+  
+  <div class="dash-container">
+    <div class="welcome-section">
+      <h1>Welcome back, <span id="userName"></span>!</h1>
+      <p>Track your orders and manage your account.</p>
+    </div>
+    
+    <div id="premiumBanner" class="premium-box" style="display:none;">
+      <h3>🔥 E-Garrage Premium</h3>
+      <p>Unlock advanced features for your dropshipping business!</p>
+      <ul>
+        <li>Advanced Analytics Dashboard</li>
+        <li>Multi-supplier Dropshipping Automation</li>
+        <li>Inventory Auto-Sync</li>
+        <li>Order Tracking Integration</li>
+        <li>VIP Priority Support</li>
+      </ul>
+      <button class="btn" style="background:white;color:#f59e0b;margin-top:1rem;" onclick="upgrade()">Upgrade Now</button>
+    </div>
+    
+    <h2 class="section-title">My Orders</h2>
+    <div class="orders-grid" id="ordersGrid">
+      <div class="empty-state">
+        <p>No orders yet</p>
+        <a href="/" class="btn btn-primary">Start Shopping</a>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const token = localStorage.getItem('token');
+    
+    if (!user || !token) {
+      alert('Please login first');
+      window.location.href = '/';
+    }
+    
+    document.getElementById('userName').textContent = user.username;
+    document.getElementById('userInfo').textContent = user.username;
+    
+    if (user.isPremium) {
+      document.getElementById('premiumBanner').style.display = 'none';
+    } else {
+      document.getElementById('premiumBanner').style.display = 'block';
+    }
+    
+    async function loadOrders() {
+      const res = await fetch('/api/orders', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      
+      const orders = await res.json();
+      
+      if (orders.length === 0) {
+        return;
+      }
+      
+      document.getElementById('ordersGrid').innerHTML = orders.map(o => `
+        <div class="order-card">
+          <div class="order-header">
+            <div>
+              <div class="order-id">Order #${o.id}</div>
+              <div style="color:var(--gray);font-size:0.9rem;">${new Date(o.created_at).toLocaleString()}</div>
+            </div>
+            <span class="order-status ${o.status}">${o.status}</span>
+          </div>
+          <div class="order-total">$${o.total.toFixed(2)}</div>
+          <div class="order-address">📍 ${o.shipping_address}</div>
+          ${o.tracking_number ? '<div class="order-tracking">📦 Tracking: ' + o.tracking_number + '</div>' : ''}
+        </div>
+      `).join('');
+    }
+    
+    async function upgrade() {
+      if (confirm('Contact admin to upgrade to Premium?')) {
+        // In production, this would integrate with a payment system
+        alert('Thank you! Our team will contact you shortly.');
+      }
+    }
+    
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/';
+    }
+    
+    loadOrders();
+  </script>
+</body>
+</html>

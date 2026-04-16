@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Garrage | Premium E-Commerce & Dropshipping</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #10b981;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --border: #e2e8f0;
+      --premium: #f59e0b;
+      --premium-dark: #d97706;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: var(--light); color: var(--dark); line-height: 1.6; }
+    
+    /* Header */
+    header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.08); position: fixed; width: 100%; top: 0; z-index: 1000; }
+    .header-inner { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
+    .logo span { color: var(--secondary); }
+    nav { display: flex; gap: 2rem; align-items: center; }
+    nav a { text-decoration: none; color: var(--gray); font-weight: 500; transition: 0.3s; }
+    nav a:hover { color: var(--primary); }
+    .header-actions { display: flex; gap: 1rem; align-items: center; }
+    
+    .btn { padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; cursor: pointer; transition: 0.3s; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+    .btn-outline:hover { background: var(--primary); color: white; }
+    .btn-premium { background: linear-gradient(135deg, var(--premium), var(--premium-dark)); color: white; }
+    .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
+    
+    .cart-btn { position: relative; }
+    .cart-count { position: absolute; top: -8px; right: -8px; background: var(--secondary); color: white; font-size: 0.7rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    
+    .badge-premium { background: linear-gradient(135deg, var(--premium), var(--premium-dark)); color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    
+    /* Hero */
+    .hero { background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%); color: white; padding: 8rem 2rem 4rem; text-align: center; }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.2rem; color: #94a3b8; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; }
+    .hero-stats { display: flex; gap: 3rem; justify-content: center; margin-top: 3rem; }
+    .stat { text-align: center; }
+    .stat-number { font-size: 2rem; font-weight: 700; color: var(--secondary); }
+    .stat-label { color: #94a3b8; font-size: 0.9rem; }
+    
+    /* Products */
+    .products-section { padding: 4rem 2rem; max-width: 1400px; margin: 0 auto; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+    .section-title { font-size: 1.8rem; }
+    .filters { display: flex; gap: 1rem; }
+    .filter-btn { padding: 0.5rem 1rem; border: 2px solid var(--border); background: white; border-radius: 20px; cursor: pointer; transition: 0.3s; }
+    .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+    .product-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: 0.3s; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+    .product-image { height: 200px; background: linear-gradient(135deg, #e2e8f0, #cbd5e1); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .product-info { padding: 1.5rem; }
+    .product-category { color: var(--secondary); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .product-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .product-desc { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
+    .product-footer { display: flex; justify-content: space-between; align-items: center; }
+    .product-price { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+    .product-stock { font-size: 0.8rem; color: var(--gray); }
+    .dropship-badge { background: var(--secondary); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    
+    /* Cart Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
+    .modal.active { display: flex; }
+    .modal-content { background: white; border-radius: 16px; max-width: 500px; width: 90%; max-height: 80vh; overflow: auto; }
+    .modal-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .modal-title { font-size: 1.3rem; font-weight: 600; }
+    .close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+    .modal-body { padding: 1.5rem; }
+    .cart-item { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+    .cart-item-image { width: 60px; height: 60px; background: var(--light); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: 600; }
+    .cart-item-price { color: var(--primary); font-weight: 600; }
+    .cart-item-qty { display: flex; align-items: center; gap: 0.5rem; }
+    .qty-btn { width: 30px; height: 30px; border: 1px solid var(--border); background: white; border-radius: 6px; cursor: pointer; }
+    .cart-total { padding: 1.5rem; border-top: 2px solid var(--border); }
+    .cart-total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; }
+    .cart-total-row.total { font-size: 1.5rem; color: var(--primary); margin-top: 0.5rem; }
+    .modal-footer { padding: 1.5rem; border-top: 1px solid var(--border); }
+    
+    /* Auth Forms */
+    .auth-modal { max-width: 400px; }
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    .form-input { width: 100%; padding: 0.8rem 1rem; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; }
+    .form-input:focus { outline: none; border-color: var(--primary); }
+    
+    .tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+    .tab { padding: 0.8rem 1.5rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .tab.active { border-bottom-color: var(--primary); color: var(--primary); }
+    
+    /* Footer */
+    footer { background: var(--dark); color: white; padding: 4rem 2rem; }
+    .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+    .footer-col h3 { margin-bottom: 1rem; color: var(--secondary); }
+    .footer-col a { display: block; color: #94a3b8; text-decoration: none; margin-bottom: 0.5rem; transition: 0.3s; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid #334155; text-align: center; color: #94a3b8; }
+    
+    /* Premium Banner */
+    .premium-banner { background: linear-gradient(135deg, var(--premium), var(--premium-dark)); color: white; padding: 1rem 2rem; text-align: center; }
+    .premium-banner a { color: white; font-weight: 600; }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero-stats { flex-direction: column; gap: 1rem; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="premium-banner" id="premiumBanner" style="display:none;">
+    🚀 <strong>E-Garrage Premium</strong> - Unlock advanced analytics, dropshipping automation & more! <a href="#" onclick="showAuth('upgrade')">Upgrade Now</a>
+  </div>
+  
+  <header>
+    <div class="header-inner">
+      <div class="logo">E-<span>Garrage</span></div>
+      <nav>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-outline cart-btn" onclick="toggleCart()">
+          🛒 Cart
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <div id="authButtons">
+          <button class="btn btn-outline" onclick="showAuth('login')">Login</button>
+          <button class="btn btn-primary" onclick="showAuth('register')">Sign Up</button>
+        </div>
+        <div id="userButtons" style="display:none;">
+          <span id="userName" style="font-weight:500;"></span>
+          <span id="premiumBadge" class="badge-premium" style="display:none;">PREMIUM</span>
+          <button class="btn btn-outline" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <h1>Premium E-Commerce & Dropshipping</h1>
+    <p>Build your online business with E-Garrage. Quality products, automated dropshipping, and powerful analytics.</p>
+    <div class="hero-buttons">
+      <a href="#products" class="btn btn-primary">Browse Products</a>
+      <a href="#about" class="btn btn-outline" style="border-color:white;color:white;">Learn More</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Products Available</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Dropshipping Suppliers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">10K+</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="products-section" id="products">
+    <div class="section-header">
+      <h2 class="section-title">Featured Products</h2>
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+        <button class="filter-btn" onclick="filterProducts('Electronics')">Electronics</button>
+        <button class="filter-btn" onclick="filterProducts('Accessories')">Accessories</button>
+        <button class="filter-btn" onclick="filterProducts('dropshipping')">🚚 Dropshipping</button>
+      </div>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+  
+  <footer id="about">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>E-Garrage</h3>
+        <p style="color:#94a3b8;">Premium e-commerce & dropshipping platform for entrepreneurs.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <a href="#products">Products</a>
+        <a href="#">Pricing</a>
+        <a href="#">API Docs</a>
+      </div>
+      <div class="footer-col">
+        <h3>Support</h3>
+        <a href="#">Help Center</a>
+        <a href="#">Contact Us</a>
+        <a href="#">VIP Support (Premium)</a>
+      </div>
+      <div class="footer-col">
+        <h3>Legal</h3>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 E-Garrage. All rights reserved.
+    </div>
+  </footer>
+  
+  <!-- Cart Modal -->
+  <div class="modal" id="cartModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Shopping Cart</h3>
+        <button class="close-modal" onclick="toggleCart()">×</button>
+      </div>
+      <div class="modal-body" id="cartItems"></div>
+      <div class="cart-total">
+        <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+        <div class="cart-total-row"><span>Shipping</span><span>Free</span></div>
+        <div class="cart-total-row total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" style="width:100%;" onclick="checkout()">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Auth Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-content auth-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Welcome to E-Garrage</h3>
+        <button class="close-modal" onclick="closeModal('authModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab('login')">Login</div>
+          <div class="tab" onclick="switchTab('register')">Register</div>
+        </div>
+        
+        <div id="loginForm">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="loginEmail" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" id="loginPassword" placeholder="••••••••">
+          </div>
+          <button class="btn btn-primary" style="width:100%;" onclick="login()">Login</button>
+        </div>
+        
+        <div id="registerForm" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-input" id="regUsername" placeholder="johndoe">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="regEmail" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" id="regPassword" placeholder="••••••••">
+          </div>
+          <button class="btn btn-primary" style="width:100%;" onclick="register()">Create Account</button>
+        </div>
+        
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);text-align:center;">
+          <p style="color:var(--gray);margin-bottom:0.5rem;">Want Premium features?</p>
+          <a href="#" onclick="showUpgradeInfo()" class="btn btn-premium">🔥 Upgrade to Premium</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Checkout Modal -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-content auth-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Checkout</h3>
+        <button class="close-modal" onclick="closeModal('checkoutModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Shipping Address</label>
+          <textarea class="form-input" id="shippingAddress" placeholder="123 Main St, City, Country" rows="3"></textarea>
+        </div>
+        <div style="background:var(--light);padding:1rem;border-radius:8px;margin:1rem 0;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;"><span>Subtotal</span><span id="checkoutSubtotal">$0.00</span></div>
+          <div style="display:flex;justify-content:space-between;font-weight:700;font-size:1.2rem;"><span>Total</span><span id="checkoutTotal">$0.00</span></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;" onclick="placeOrder()">Place Order</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    let products = [];
+    let cart = [];
+    let user = null;
+    let token = null;
+    
+    async function loadProducts() {
+      const res = await fetch('/api/products');
+      products = await res.json();
+      renderProducts(products);
+    }
+    
+    function renderProducts(list) {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = list.map(p => `
+        <div class="product-card">
+          <div class="product-image">📦</div>
+          <div class="product-info">
+            <div class="product-category">${p.category}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-desc">${p.description || ''}</div>
+            <div class="product-footer">
+              <div>
+                <div class="product-price">$${p.price.toFixed(2)}</div>
+                ${p.isDropshipping ? '<span class="dropship-badge">🚚 Dropship</span>' : ''}
+              </div>
+              <div class="product-stock">${p.stock > 0 ? p.stock + ' in stock' : 'Out of stock'}</div>
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:1rem;" onclick="addToCart(${p.id})">Add to Cart</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function filterProducts(filter) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      if (filter === 'all') {
+        renderProducts(products);
+      } else if (filter === 'dropshipping') {
+        renderProducts(products.filter(p => p.isDropshipping));
+      } else {
+        renderProducts(products.filter(p => p.category === filter));
+      }
+    }
+    
+    function addToCart(productId) {
+      if (!user) { showAuth('login'); return; }
+      const product = products.find(p => p.id === productId);
+      const existing = cart.find(i => i.id === productId);
+      if (existing) { existing.quantity++; }
+      else { cart.push({ ...product, quantity: 1 }); }
+      updateCartUI();
+      alert('Added to cart!');
+    }
+    
+    function updateCartUI() {
+      document.getElementById('cartCount').textContent = cart.reduce((sum, i) => sum + i.quantity, 0);
+      const container = document.getElementById('cartItems');
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="text-align:center;color:var(--gray);">Your cart is empty</p>';
+      } else {
+        container.innerHTML = cart.map(item => `
+          <div class="cart-item">
+            <div class="cart-item-image">📦</div>
+            <div class="cart-item-info">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+              <div class="cart-item-qty">
+                <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+                <span>${item.quantity}</span>
+                <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+      document.getElementById('cartSubtotal').textContent = '$' + total.toFixed(2);
+      document.getElementById('cartTotal').textContent = '$' + total.toFixed(2);
+      document.getElementById('checkoutSubtotal').textContent = '$' + total.toFixed(2);
+      document.getElementById('checkoutTotal').textContent = '$' + total.toFixed(2);
+    }
+    
+    function updateQty(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) { cart = cart.filter(i => i.id !== productId); }
+      }
+      updateCartUI();
+    }
+    
+    function toggleCart() { document.getElementById('cartModal').classList.toggle('active'); }
+    
+    async function checkout() {
+      if (!user) { showAuth('login'); return; }
+      if (cart.length === 0) { alert('Cart is empty!'); return; }
+      toggleCart();
+      document.getElementById('checkoutModal').classList.add('active');
+    }
+    
+    async function placeOrder() {
+      const address = document.getElementById('shippingAddress').value;
+      if (!address) { alert('Please enter shipping address'); return; }
+      
+      const items = cart.map(i => ({ id: i.id, quantity: i.quantity, price: i.price }));
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ items, shipping_address: address })
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        alert('Order placed! Order #' + data.orderId);
+        cart = [];
+        updateCartUI();
+        closeModal('checkoutModal');
+      } else { alert('Error: ' + data.message); }
+    }
+    
+    function showAuth(tab) { switchTab(tab); document.getElementById('authModal').classList.add('active'); }
+    
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      if (tab === 'login') {
+        document.querySelectorAll('.tab')[0].classList.add('active');
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+      } else {
+        document.querySelectorAll('.tab')[1].classList.add('active');
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+      }
+    }
+    
+    async function login() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        token = data.token; user = data.user;
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        updateUserUI();
+        closeModal('authModal');
+      } else { alert(data.message); }
+    }
+    
+    async function register() {
+      const username = document.getElementById('regUsername').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        token = data.token; user = data.user;
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        updateUserUI();
+        closeModal('authModal');
+      } else { alert(data.message); }
+    }
+    
+    function logout() {
+      token = null; user = null; cart = [];
+      localStorage.removeItem('token'); localStorage.removeItem('user');
+      updateUserUI(); updateCartUI();
+    }
+    
+    function updateUserUI() {
+      if (user) {
+        document.getElementById('authButtons').style.display = 'none';
+        document.getElementById('userButtons').style.display = 'flex';
+        document.getElementById('userName').textContent = user.username;
+        document.getElementById('premiumBadge').style.display = user.isPremium ? 'inline' : 'none';
+        document.getElementById('premiumBanner').style.display = user.isPremium ? 'none' : 'block';
+      } else {
+        document.getElementById('authButtons').style.display = 'flex';
+        document.getElementById('userButtons').style.display = 'none';
+        document.getElementById('premiumBanner').style.display = 'none';
+      }
+    }
+    
+    function showUpgradeInfo() {
+      alert('🔥 E-Garrage Premium:\n\n✓ Advanced Analytics\n✓ Multi-supplier Dropshipping\n✓ Inventory Auto-Sync\n✓ Order Tracking\n✓ VIP Support\n✓ API Access\n\nContact admin to upgrade!');
+    }
+    
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    
+    const savedToken = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    if (savedToken && savedUser) { token = savedToken; user = JSON.parse(savedUser); }
+    
+    loadProducts();
+    updateUserUI();
+  </script>
+</body>
+</html>
