@@ -1,6 +1,6 @@
 /**
  * E-GARRAGE - CUSTOM CONFIGURATION
- * Replace with your real information
+ * YOUR REAL INFORMATION
  */
 
 module.exports = {
@@ -10,16 +10,17 @@ module.exports = {
     tagline: 'Next-Gen Automotive Platform',
     slogan: 'Drive the Future',
     
-    // YOUR REAL INFORMATION HERE
-    email: 'contact@egarage.com',
-    phone: '+225 07 00 00 0000', // Your phone number
-    whatsapp: '+225 07 00 00 0000',
-    website: 'https://egarage.com',
+    // YOUR REAL INFORMATION
+    email: 'electronbusiness@gmail.com',
+    phone: '+229 01 977 003 47',
+    phoneAlt: '+229 01 498 022 02',
+    whatsapp: '+229 01 977 003 47',
+    website: 'https://e-garrage.com',
     
-    address: 'Abidjan, Côte d\'Ivoire',
-    city: 'Abidjan',
-    country: 'Côte d\'Ivoire',
-    countryCode: 'CI',
+    address: 'Cotonou, Bénin',
+    city: 'Cotonou',
+    country: 'Bénin',
+    countryCode: 'BJ',
     
     // Social Media
     facebook: 'https://facebook.com/egarage',
@@ -29,62 +30,43 @@ module.exports = {
     youtube: 'https://youtube.com/@egarage',
     
     // Business Hours
-    hours: '24/7 AI Support | Mon-Fri: 9AM-6PM GMT',
-    timezone: 'Africa/Abidjan'
+    hours: '24/7 AI Support | Mon-Fri: 8AM-6PM GMT+1',
+    timezone: 'Africa/Porto-Novo'
   },
   
   // ==================== FOUNDER INFO ====================
   founder: {
-    name: '[YOUR NAME]',
+    name: 'DOSSOU-YOVO ATTIOGBE A.Y. Ilarion',
     title: 'Founder & CEO',
-    bio: 'Visionary leader transforming the automotive industry with AI-powered solutions.',
+    bio: 'Visionary leader transforming the automotive industry in Africa with AI-powered solutions.',
     photo: '/images/founder.jpg',
-    linkedin: 'https://linkedin.com/in/yourprofile',
-    email: 'founder@egarage.com'
+    linkedin: 'https://linkedin.com/in/ilarion-dossou-yovo',
+    email: 'electronbusiness@gmail.com'
   },
   
   // ==================== TEAM MEMBERS ====================
-  team: [
-    {
-      name: '[CTO NAME]',
-      role: 'Chief Technology Officer',
-      bio: 'AI & Tech Expert',
-      photo: '/images/team/cto.jpg'
-    },
-    {
-      name: '[COO NAME]',
-      role: 'Chief Operations Officer',
-      bio: 'Operations & Logistics Expert',
-      photo: '/images/team/coo.jpg'
-    },
-    {
-      name: '[CMO NAME]',
-      role: 'Chief Marketing Officer',
-      bio: 'Growth & Brand Expert',
-      photo: '/images/team/cmo.jpg'
-    }
-  ],
+  team: [],
   
   // ==================== BUSINESS INFO ====================
   business: {
-    // Tax information
-    taxId: 'YOUR TAX ID',
-    vatRate: 0.18, // 18% for Côte d'Ivoire
+    // Tax information (Bénin)
+    taxId: '',
+    vatRate: 0.18, // 18% TVA Benin
     
-    // Currency (XOF = West African Franc)
+    // Currency (XOF = West African Franc - BCEAO)
     currency: 'XOF',
     currencySymbol: 'XOF',
     currencyName: 'Franc CFA',
     
     // Payment info
-    paymentEmail: 'payments@egarage.com',
-    bankName: 'YOUR BANK',
-    bankAccount: 'YOUR ACCOUNT NUMBER',
+    paymentEmail: 'electronbusiness@gmail.com',
+    bankName: '',
+    bankAccount: '',
     
     // Registration
     registeredYear: 2024,
-    rccm: 'YOUR RCCM NUMBER',
-    ncc: 'YOUR NCC NUMBER'
+    rccm: '',
+    ncc: ''
   },
   
   // ==================== SHIPPING ====================
@@ -92,8 +74,8 @@ module.exports = {
     freeShippingThreshold: 50000, // XOF
     standardDays: '5-10 jours',
     expressDays: '2-3 jours',
-    freeZones: ['Abidjan', 'Bouaké', 'Yamoussoukro'],
-    countries: ['Côte d\'Ivoire', 'Sénégal', 'Mali', 'Burkina Faso', 'Niger', 'Togo', 'Bénin']
+    freeZones: ['Cotonou', 'Abomey-Calavi', 'Porto-Novo'],
+    countries: ['Bénin', 'Togo', 'Niger', 'Burkina Faso', 'Sénégal', 'Mali']
   },
   
   // ==================== LEGAL ====================
@@ -104,27 +86,26 @@ module.exports = {
     cookiesUrl: '/cookies',
     
     // Legal entity
-    companyName: '[YOUR COMPANY NAME]',
-    address: 'YOUR FULL ADDRESS',
-    rccm: 'RCCM NUMBER',
-    ncc: 'NCC NUMBER'
+    companyName: 'E-GARRAGE',
+    address: 'Cotonou, République du Bénin',
+    rccm: '',
+    ncc: ''
   },
   
   // ==================== SUPPORT ====================
   support: {
-    email: 'support@egarage.com',
-    phone: '+225 07 00 00 0000',
-    whatsapp: 'https://wa.me/2250700000000',
-    ticketingUrl: 'https://support.egarage.com',
+    email: 'electronbusiness@gmail.com',
+    phone: '+229 01 977 003 47',
+    whatsapp: 'https://wa.me/2290197700347',
+    ticketingUrl: 'https://support.e-garrage.com',
     
     // Response times
-    responseTime: '24-48 hours',
+    responseTime: '24-48 heures',
     liveChatHours: '24/7'
   },
   
   // ==================== API KEYS (SET VIA ENV) ====================
   apiKeys: {
-    // Set these as environment variables
     stripeSecret: process.env.STRIPE_SECRET_KEY,
     stripePublishable: process.env.STRIPE_PUBLISHABLE_KEY,
     paypalClient: process.env.PAYPAL_CLIENT_ID,
