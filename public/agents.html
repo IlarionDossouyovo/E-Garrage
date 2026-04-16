@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agents Dashboard | E-GARRAGE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --premium: #ffd700;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --border: #2a2a3a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #fff; min-height: 100vh; }
+    
+    /* Header */
+    header { 
+      background: var(--dark-secondary); 
+      border-bottom: 1px solid var(--border); 
+      padding: 1rem 2rem; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    }
+    .logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; }
+    .logo span { color: var(--neon-blue); }
+    .status-badge { 
+      padding: 0.4rem 1rem; 
+      background: rgba(0, 255, 136, 0.2); 
+      color: var(--neon-green); 
+      border-radius: 20px; 
+      font-size: 0.8rem;
+    }
+    
+    /* Layout */
+    .dashboard { display: flex; min-height: calc(100vh - 70px); }
+    .sidebar { width: 250px; background: var(--dark-secondary); padding: 1.5rem 0; }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { 
+      padding: 0.8rem 1.5rem; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.8rem;
+      transition: 0.3s;
+    }
+    .sidebar-menu li:hover, .sidebar-menu li.active { 
+      background: rgba(0, 212, 255, 0.1); 
+      color: var(--neon-blue);
+    }
+    
+    .main { flex: 1; padding: 2rem; }
+    .page-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; margin-bottom: 0.5rem; }
+    .page-subtitle { color: #8892a0; margin-bottom: 2rem; }
+    
+    /* Stats Grid */
+    .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      padding: 1.2rem; 
+      text-align: center;
+    }
+    .stat-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .stat-value { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); }
+    .stat-label { color: #8892a0; font-size: 0.8rem; }
+    
+    /* Agents Grid */
+    .agents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+    .agent-card { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border); 
+      border-radius: 16px; 
+      padding: 1.5rem;
+      transition: 0.3s;
+    }
+    .agent-card:hover { border-color: var(--neon-blue); }
+    .agent-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .agent-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-green)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .agent-status { 
+      padding: 0.3rem 0.8rem; 
+      border-radius: 20px; 
+      font-size: 0.7rem; 
+      font-weight: 600;
+    }
+    .agent-active { background: rgba(0, 255, 136, 0.2); color: var(--neon-green); }
+    .agent-idle { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+    
+    .agent-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .agent-card p { color: #8892a0; font-size: 0.9rem; margin-bottom: 1rem; }
+    .agent-stats { display: flex; gap: 1rem; font-size: 0.85rem; }
+    .agent-stat { color: #a0a8b8; }
+    .agent-stat span { color: var(--neon-blue); font-weight: 600; }
+    
+    .agent-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+    .btn { 
+      padding: 0.5rem 1rem; 
+      border-radius: 6px; 
+      border: none; 
+      cursor: pointer; 
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    .btn-run { background: var(--neon-blue); color: var(--dark); }
+    .btn-run:hover { box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4); }
+    .btn-test { background: var(--dark-secondary); border: 1px solid var(--border); color: #8892a0; }
+    .btn-test:hover { border-color: var(--neon-blue); color: var(--neon-blue); }
+    
+    /* Logs */
+    .logs-section { background: var(--dark-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+    .logs-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .logs-header h3 { font-family: 'Orbitron', sans-serif; }
+    .log-list { max-height: 400px; overflow-y: auto; }
+    .log-item { 
+      padding: 0.8rem; 
+      border-bottom: 1px solid var(--border); 
+      display: flex; 
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+    .log-item:last-child { border-bottom: none; }
+    .log-time { color: #8892a0; }
+    .log-agent { color: var(--neon-blue); font-weight: 600; }
+    .log-action { color: #a0a8b8; }
+    
+    /* Console */
+    .console-section { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border); 
+      border-radius: 16px; 
+      padding: 1.5rem; 
+      margin-top: 1.5rem;
+    }
+    .console-output { 
+      background: #000; 
+      padding: 1rem; 
+      border-radius: 8px; 
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--neon-green);
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    /* Quick Actions */
+    .quick-actions { display: flex; gap: 1rem; margin-bottom: 2rem; }
+    .action-btn { 
+      padding: 0.8rem 1.5rem; 
+      background: var(--dark-card); 
+      border: 1px solid var(--border); 
+      border-radius: 8px; 
+      color: #8892a0;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .action-btn:hover { border-color: var(--neon-blue); color: var(--neon-blue); }
+    
+    @media (max-width: 1200px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .agents-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .agents-grid { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">E-<span>GARRAGE</span> AI Agents</div>
+    <div class="status-badge">● All Systems Active</div>
+  </header>
+  
+  <div class="dashboard">
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="active" onclick="showPage('overview')">📊 Overview</li>
+        <li onclick="showPage('agents')">🤖 Agents</li>
+        <li onclick="showPage('logs')">📝 Logs</li>
+        <li onclick="showPage('console')">💻 Console</li>
+        <li onclick="showPage('n8n')">🔗 n8n Integration</li>
+      </ul>
+    </aside>
+    
+    <main class="main">
+      <div id="overviewPage">
+        <h1 class="page-title">AI Agents Overview</h1>
+        <p class="page-subtitle">Real-time monitoring of all AI agents</p>
+        
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🤖</div>
+            <div class="stat-value" id="totalAgents">6</div>
+            <div class="stat-label">Active Agents</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📨</div>
+            <div class="stat-value" id="totalProcessed">0</div>
+            <div class="stat-label">Processed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value" id="totalResolved">0</div>
+            <div class="stat-label">Resolved</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value" id="avgTime">0ms</div>
+            <div class="stat-label">Avg Response</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-value" id="uptime">0s</div>
+            <div class="stat-label">Uptime</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🔄</div>
+            <div class="stat-value" id="automation">ON</div>
+            <div class="stat-label">Automation</div>
+          </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button class="action-btn" onclick="runAllAgents()">🚀 Run All Agents</button>
+          <button class="action-btn" onclick="triggerAutomation()">⚡ Trigger Automation</button>
+          <button class="action-btn" onclick="refreshStats()">🔄 Refresh Stats</button>
+        </div>
+        
+        <!-- Agents Grid -->
+        <h3 style="font-family:'Orbitron',sans-serif;margin-bottom:1rem;">Active AI Agents</h3>
+        <div class="agents-grid">
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-icon">💬</div>
+              <span class="agent-status agent-active">Active</span>
+            </div>
+            <h3>Customer Service</h3>
+            <p>Handles support queries, FAQs, and customer inquiries</p>
+            <div class="agent-stats">
+              <span class="agent-stat">Processed: <span id="csProcessed">0</span></span>
+              <span class="agent-stat">Resolved: <span id="csResolved">0</span></span>
+            </div>
+            <div class="agent-actions">
+              <button class="btn btn-run" onclick="runAgent('customer_service')">Run</button>
+              <button class="btn btn-test" onclick="testAgent('customer_service')">Test</button>
+            </div>
+          </div>
+          
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-icon">📦</div>
+              <span class="agent-status agent-active">Active</span>
+            </div>
+            <h3>Order Processing</h3>
+            <p>Processes orders, updates status, handles shipping</p>
+            <div class="agent-stats">
+              <span class="agent-stat">Processed: <span id="orderProcessed">0</span></span>
+              <span class="agent-stat">Completed: <span id="orderCompleted">0</span></span>
+            </div>
+            <div class="agent-actions">
+              <button class="btn btn-run" onclick="runAgent('order')">Run</button>
+              <button class="btn btn-test" onclick="testAgent('order')">Test</button>
+            </div>
+          </div>
+          
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-icon">📊</div>
+              <span class="agent-status agent-active">Active</span>
+            </div>
+            <h3>Inventory Manager</h3>
+            <p>Monitors stock levels, triggers restocks, alerts</p>
+            <div class="agent-stats">
+              <span class="agent-stat">Alerts: <span id="invAlerts">0</span></span>
+              <span class="agent-stat">Restocks: <span id="invRestocks">0</span></span>
+            </div>
+            <div class="agent-actions">
+              <button class="btn btn-run" onclick="runAgent('inventory')">Run</button>
+              <button class="btn btn-test" onclick="testAgent('inventory')">Test</button>
+            </div>
+          </div>
+          
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-icon">💰</div>
+              <span class="agent-status agent-active">Active</span>
+            </div>
+            <h3>Sales Assistant</h3>
+            <p>Product recommendations, upselling, personalized suggestions</p>
+            <div class="agent-stats">
+              <span class="agent-stat">Recs: <span id="salesRecs">0</span></span>
+              <span class="agent-stat">Conversions: <span id="salesConv">0</span></span>
+            </div>
+            <div class="agent-actions">
+              <button class="btn btn-run" onclick="runAgent('sales')">Run</button>
+              <button class="btn btn-test" onclick="testAgent('sales')">Test</button>
+            </div>
+          </div>
+          
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-icon">📈</div>
+              <span class="agent-status agent-active">Active</span>
+            </div>
+            <h3>Analytics Engine</h3>
+            <p>Generates reports, insights, business intelligence</p>
+            <div class="agent-stats">
+              <span class="agent-stat">Reports: <span id="analyticsReports">0</span></span>
+            </div>
+            <div class="agent-actions">
+              <button class="btn btn-run" onclick="runAgent('analytics')">Run</button>
+              <button class="btn btn-test" onclick="testAgent('analytics')">Test</button>
+            </div>
+          </div>
+          
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-icon">📢</div>
+              <span class="agent-status agent-active">Active</span>
+            </div>
+            <h3>Marketing Bot</h3>
+            <p>Runs campaigns, manages promotions, social media</p>
+            <div class="agent-stats">
+              <span class="agent-stat">Campaigns: <span id="mktCampaigns">0</span></span>
+              <span class="agent-stat">Reach: <span id="mktReach">0</span></span>
+            </div>
+            <div class="agent-actions">
+              <button class="btn btn-run" onclick="runAgent('marketing')">Run</button>
+              <button class="btn btn-test" onclick="testAgent('marketing')">Test</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Logs -->
+        <div class="logs-section">
+          <div class="logs-header">
+            <h3>Recent Agent Logs</h3>
+            <button class="btn btn-test" onclick="loadLogs()">🔄 Refresh</button>
+          </div>
+          <div class="log-list" id="logList"></div>
+        </div>
+        
+        <!-- Console -->
+        <div class="console-section">
+          <h3 style="font-family:'Orbitron',sans-serif;margin-bottom:1rem;">Agent Console Output</h3>
+          <div class="console-output" id="consoleOutput">
+            > E-GARRAGE AI Agents initialized...<br>
+            > Waiting for commands...
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script>
+    // Load agent status
+    async function loadStatus() {
+      try {
+        const res = await fetch('/api/agents/status');
+        const status = await res.json();
+        
+        // Update stats
+        document.getElementById('totalProcessed').textContent = 
+          status.stats.customer_service.processed + 
+          status.stats.order.processed +
+          status.stats.inventory.alerts +
+          status.stats.sales.recommendations +
+          status.stats.analytics.reports +
+          status.stats.marketing.campaigns;
+        
+        document.getElementById('totalResolved').textContent = 
+          status.stats.customer_service.resolved + 
+          status.stats.order.completed;
+        
+        document.getElementById('uptime').textContent = Math.floor(status.uptime) + 's';
+        
+        // Update agent stats
+        document.getElementById('csProcessed').textContent = status.stats.customer_service.processed;
+        document.getElementById('csResolved').textContent = status.stats.customer_service.resolved;
+        document.getElementById('orderProcessed').textContent = status.stats.order.processed;
+        document.getElementById('orderCompleted').textContent = status.stats.order.completed;
+        document.getElementById('invAlerts').textContent = status.stats.inventory.alerts;
+        document.getElementById('invRestocks').textContent = status.stats.inventory.restocks;
+        document.getElementById('salesRecs').textContent = status.stats.sales.recommendations;
+        document.getElementById('analyticsReports').textContent = status.stats.analytics.reports;
+        document.getElementById('mktCampaigns').textContent = status.stats.marketing.campaigns;
+        document.getElementById('mktReach').textContent = status.stats.marketing.reach;
+        
+        // Load logs
+        loadLogs();
+        
+      } catch (e) {
+        console.log('Agent status unavailable');
+      }
+    }
+    
+    async function loadLogs() {
+      try {
+        const res = await fetch('/api/agents/status');
+        const status = await res.json();
+        
+        const logList = document.getElementById('logList');
+        logList.innerHTML = status.recentLogs.slice(0, 10).map(log => `
+          <div class="log-item">
+            <span class="log-time">${new Date(log.timestamp).toLocaleTimeString()}</span>
+            <span class="log-agent">${log.agent}</span>
+            <span class="log-action">${log.action}</span>
+          </div>
+        `).join('') || '<div class="log-item"><span>No logs yet</span></div>';
+        
+      } catch (e) {
+        document.getElementById('logList').innerHTML = '<div class="log-item"><span>No logs available</span></div>';
+      }
+    }
+    
+    async function runAgent(type) {
+      logToConsole(`> Running ${type} agent...`);
+      
+      try {
+        let res, body;
+        
+        switch(type) {
+          case 'customer_service':
+            res = await fetch('/api/agents/customer-service', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ query: 'Hello, I need help', userId: 1 })
+            });
+            break;
+          case 'order':
+            res = await fetch('/api/agents/order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ orderId: 1, action: 'status_update', data: { status: 'processing' } })
+            });
+            break;
+          case 'inventory':
+            res = await fetch('/api/agents/inventory', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'check' })
+            });
+            break;
+          case 'sales':
+            res = await fetch('/api/agents/sales', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ userId: 1, type: 'popular' })
+            });
+            break;
+          case 'analytics':
+            res = await fetch('/api/agents/analytics', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ period: 'daily' })
+            });
+            break;
+          case 'marketing':
+            res = await fetch('/api/agents/marketing', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ campaign: 'welcome' })
+            });
+            break;
+        }
+        
+        const result = await res.json();
+        logToConsole(`> ${type} agent: ${JSON.stringify(result).substring(0, 100)}...`);
+        setTimeout(loadStatus, 500);
+        
+      } catch (e) {
+        logToConsole(`> Error: ${e.message}`);
+      }
+    }
+    
+    function testAgent(type) {
+      logToConsole(`> Testing ${type} agent...`);
+      runAgent(type);
+    }
+    
+    async function runAllAgents() {
+      logToConsole('> Running all agents...');
+      for (const type of ['customer_service', 'order', 'inventory', 'sales', 'analytics', 'marketing']) {
+        await runAgent(type);
+        await new Promise(r => setTimeout(r, 300));
+      }
+      logToConsole('> All agents completed');
+    }
+    
+    async function triggerAutomation() {
+      logToConsole('> Triggering automated tasks...');
+      try {
+        await fetch('/api/agents/automate', { method: 'POST' });
+        logToConsole('> Automation tasks completed');
+        setTimeout(loadStatus, 500);
+      } catch (e) {
+        logToConsole(`> Error: ${e.message}`);
+      }
+    }
+    
+    function refreshStats() {
+      loadStatus();
+      logToConsole('> Stats refreshed');
+    }
+    
+    function logToConsole(msg) {
+      const consoleEl = document.getElementById('consoleOutput');
+      consoleEl.innerHTML += '<br>' + msg;
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+    
+    function showPage(page) {
+      console.log('Showing:', page);
+    }
+    
+    // Initialize
+    loadStatus();
+    setInterval(loadStatus, 5000);
+  </script>
+</body>
+</html>

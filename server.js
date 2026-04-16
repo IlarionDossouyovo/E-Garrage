@@ -410,6 +410,118 @@ app.get('/privacy', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'privacy.html'));
 });
 
+app.get('/agents', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'agents.html'));
+});
+
+// ============ AI AGENTS API ============
+const agents = require('./agents');
+
+// Run specific agent
+app.post('/api/agents/run', async (req, res) => {
+  try {
+    const { agentType, input, orderId, action, data, productId, userId, type, period, campaign } = req.body;
+    
+    const result = await agents.runAgent(agentType, {
+      query: input,
+      orderId,
+      action,
+      data,
+      productId,
+      userId,
+      type,
+      period,
+      campaign
+    });
+    
+    res.json({ success: true, ...result });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Customer Service Agent
+app.post('/api/agents/customer-service', async (req, res) => {
+  try {
+    const { query, userId } = req.body;
+    const result = await agents.runCustomerServiceAgent({ query, userId });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Order Agent
+app.post('/api/agents/order', async (req, res) => {
+  try {
+    const { orderId, action, data } = req.body;
+    const result = await agents.runOrderAgent(orderId, action, data);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Inventory Agent
+app.post('/api/agents/inventory', async (req, res) => {
+  try {
+    const { action, productId } = req.body;
+    const result = await agents.runInventoryAgent(action, productId);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Sales Agent
+app.post('/api/agents/sales', async (req, res) => {
+  try {
+    const { userId, type } = req.body;
+    const result = await agents.runSalesAgent(userId, type);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Analytics Agent
+app.post('/api/agents/analytics', async (req, res) => {
+  try {
+    const { period } = req.body;
+    const result = await agents.runAnalyticsAgent(period);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Marketing Agent
+app.post('/api/agents/marketing', async (req, res) => {
+  try {
+    const { campaign } = req.body;
+    const result = await agents.runMarketingAgent(campaign);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get agent status
+app.get('/api/agents/status', (req, res) => {
+  const status = agents.getAgentStatus();
+  res.json(status);
+});
+
+// Run automated tasks
+app.post('/api/agents/automate', async (req, res) => {
+  try {
+    await agents.runAutomatedTasks();
+    res.json({ success: true, message: 'Automated tasks completed' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
