@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration E-GARRAGE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --premium: #ffd700;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --border: #2a2a3a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #fff; min-height: 100vh; padding: 2rem; }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 212, 255, 0.1) 0%, transparent 60%);
+      z-index: -1;
+    }
+    
+    h1 { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; }
+    h1 span { color: var(--neon-blue); }
+    .subtitle { text-align: center; color: #8892a0; margin-bottom: 3rem; }
+    
+    .config-container { max-width: 800px; margin: 0 auto; }
+    
+    .section {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--neon-blue);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .form-full { grid-column: span 2; }
+    
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; color: #8892a0; font-size: 0.9rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--dark-secondary);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+    }
+    .form-group input::placeholder { color: #64748b; }
+    
+    .form-hint { font-size: 0.75rem; color: #64748b; margin-top: 0.3rem; }
+    
+    .btn-save {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      color: var(--dark);
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
+      margin-top: 2rem;
+      transition: 0.3s;
+    }
+    .btn-save:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5); }
+    
+    .success-msg {
+      display: none;
+      background: rgba(0, 255, 136, 0.2);
+      color: var(--neon-green);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .success-msg.show { display: block; }
+    
+    .current-info {
+      background: var(--dark-secondary);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .current-info strong { color: var(--neon-blue); }
+    
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-full { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>E-<span>GARRAGE</span> Configuration</h1>
+  <p class="subtitle">Entrez vos vraies informations pour personnaliser la plateforme</p>
+  
+  <div class="config-container">
+    <div class="success-msg" id="successMsg">✅ Configuration sauvegardée avec succès!</div>
+    
+    <div class="current-info">
+      📧 Email: <strong id="displayEmail">contact@egarage.com</strong> | 
+      📞 Phone: <strong id="displayPhone">+225 07 00 00 0000</strong> | 
+      🌐 Ville: <strong id="displayCity">Abidjan</strong>
+    </div>
+    
+    <!-- Company Info -->
+    <div class="section">
+      <h2>🏢 Informations Entreprise</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nom de l'entreprise *</label>
+          <input type="text" id="companyName" placeholder="E-GARRAGE" value="E-GARRAGE">
+        </div>
+        <div class="form-group">
+          <label>Tagline</label>
+          <input type="text" id="tagline" placeholder="Next-Gen Automotive Platform" value="Next-Gen Automotive Platform">
+        </div>
+        <div class="form-group">
+          <label>Email de contact *</label>
+          <input type="email" id="contactEmail" placeholder="contact@votreentreprise.com">
+        </div>
+        <div class="form-group">
+          <label>Téléphone *</label>
+          <input type="tel" id="phone" placeholder="+225 07 00 00 0000">
+        </div>
+        <div class="form-group">
+          <label>WhatsApp</label>
+          <input type="tel" id="whatsapp" placeholder="+225 07 00 00 0000">
+        </div>
+        <div class="form-group">
+          <label>Site Web</label>
+          <input type="url" id="website" placeholder="https://votre-site.com">
+        </div>
+        <div class="form-group">
+          <label>Ville</label>
+          <input type="text" id="city" placeholder="Abidjan" value="Abidjan">
+        </div>
+        <div class="form-group">
+          <label>Pays</label>
+          <input type="text" id="country" placeholder="Côte d'Ivoire" value="Côte d'Ivoire">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Founder Info -->
+    <div class="section">
+      <h2>👤 Informations Fondateur</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Votre nom complet *</label>
+          <input type="text" id="founderName" placeholder="Votre Nom">
+        </div>
+        <div class="form-group">
+          <label>Titre</label>
+          <input type="text" id="founderTitle" placeholder="Founder & CEO" value="Founder & CEO">
+        </div>
+        <div class="form-group form-full">
+          <label>Biographie courte</label>
+          <textarea id="founderBio" rows="2" placeholder="Votre parcours..."></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Business Info -->
+    <div class="section">
+      <h2>💼 Informations Commerciales</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Devise</label>
+          <select id="currency">
+            <option value="XOF">XOF - Franc CFA (Afrique de l'Ouest)</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="USD">USD - Dollar US</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Taux TVA (%)</label>
+          <input type="number" id="vatRate" value="18" min="0" max="100">
+        </div>
+        <div class="form-group">
+          <label>Email Paiements</label>
+          <input type="email" id="paymentEmail" placeholder="payments@votreentreprise.com">
+        </div>
+        <div class="form-group">
+          <label>Seuil livraison gratuite (XOF)</label>
+          <input type="number" id="freeShipping" value="50000">
+        </div>
+        <div class="form-group form-full">
+          <label>Adresse complète</label>
+          <textarea id="address" rows="2" placeholder="Votre adresse complète..."></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Social Media -->
+    <div class="section">
+      <h2>📱 Réseaux Sociaux</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Facebook URL</label>
+          <input type="url" id="facebook" placeholder="https://facebook.com/votrepage">
+        </div>
+        <div class="form-group">
+          <label>Instagram URL</label>
+          <input type="url" id="instagram" placeholder="https://instagram.com/votrecompte">
+        </div>
+        <div class="form-group">
+          <label>LinkedIn URL</label>
+          <input type="url" id="linkedin" placeholder="https://linkedin.com/company/votreentreprise">
+        </div>
+        <div class="form-group">
+          <label>YouTube URL</label>
+          <input type="url" id="youtube" placeholder="https://youtube.com/@votrechaine">
+        </div>
+      </div>
+    </div>
+    
+    <button class="btn-save" onclick="saveConfiguration()">💾 Sauvegarder la Configuration</button>
+  </div>
+  
+  <script>
+    function saveConfiguration() {
+      const config = {
+        company: {
+          name: document.getElementById('companyName').value,
+          tagline: document.getElementById('tagline').value,
+          email: document.getElementById('contactEmail').value,
+          phone: document.getElementById('phone').value,
+          whatsapp: document.getElementById('whatsapp').value,
+          website: document.getElementById('website').value,
+          city: document.getElementById('city').value,
+          country: document.getElementById('country').value,
+          address: document.getElementById('address').value
+        },
+        founder: {
+          name: document.getElementById('founderName').value,
+          title: document.getElementById('founderTitle').value,
+          bio: document.getElementById('founderBio').value
+        },
+        business: {
+          currency: document.getElementById('currency').value,
+          vatRate: document.getElementById('vatRate').value,
+          paymentEmail: document.getElementById('paymentEmail').value,
+          freeShipping: document.getElementById('freeShipping').value
+        },
+        social: {
+          facebook: document.getElementById('facebook').value,
+          instagram: document.getElementById('instagram').value,
+          linkedin: document.getElementById('linkedin').value,
+          youtube: document.getElementById('youtube').value
+        },
+        savedAt: new Date().toISOString()
+      };
+      
+      // Save to localStorage
+      localStorage.setItem('egarrage_config', JSON.stringify(config));
+      
+      // Update display
+      document.getElementById('displayEmail').textContent = config.company.email || 'Non défini';
+      document.getElementById('displayPhone').textContent = config.company.phone || 'Non défini';
+      document.getElementById('displayCity').textContent = config.company.city || 'Non défini';
+      
+      // Show success
+      document.getElementById('successMsg').classList.add('show');
+      setTimeout(() => {
+        document.getElementById('successMsg').classList.remove('show');
+      }, 3000);
+      
+      console.log('Configuration saved:', config);
+    }
+    
+    // Load saved config on page load
+    window.addEventListener('load', function() {
+      const saved = localStorage.getItem('egarrage_config');
+      if (saved) {
+        const config = JSON.parse(saved);
+        
+        if (config.company) {
+          document.getElementById('companyName').value = config.company.name || '';
+          document.getElementById('tagline').value = config.company.tagline || '';
+          document.getElementById('contactEmail').value = config.company.email || '';
+          document.getElementById('phone').value = config.company.phone || '';
+          document.getElementById('whatsapp').value = config.company.whatsapp || '';
+          document.getElementById('website').value = config.company.website || '';
+          document.getElementById('city').value = config.company.city || '';
+          document.getElementById('country').value = config.company.country || '';
+          document.getElementById('address').value = config.company.address || '';
+          
+          document.getElementById('displayEmail').textContent = config.company.email || 'Non défini';
+          document.getElementById('displayPhone').textContent = config.company.phone || 'Non défini';
+          document.getElementById('displayCity').textContent = config.company.city || 'Non défini';
+        }
+        
+        if (config.founder) {
+          document.getElementById('founderName').value = config.founder.name || '';
+          document.getElementById('founderTitle').value = config.founder.title || '';
+          document.getElementById('founderBio').value = config.founder.bio || '';
+        }
+        
+        if (config.business) {
+          document.getElementById('currency').value = config.business.currency || 'XOF';
+          document.getElementById('vatRate').value = config.business.vatRate || 18;
+          document.getElementById('paymentEmail').value = config.business.paymentEmail || '';
+          document.getElementById('freeShipping').value = config.business.freeShipping || 50000;
+        }
+        
+        if (config.social) {
+          document.getElementById('facebook').value = config.social.facebook || '';
+          document.getElementById('instagram').value = config.social.instagram || '';
+          document.getElementById('linkedin').value = config.social.linkedin || '';
+          document.getElementById('youtube').value = config.social.youtube || '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

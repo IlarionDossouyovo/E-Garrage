@@ -418,6 +418,10 @@ app.get('/chat', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'chat.html'));
 });
 
+app.get('/config', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'config.html'));
+});
+
 // ============ WEBHOOKS API ============
 app.post('/api/webhooks', (req, res) => {
   const { url, events } = req.body;
