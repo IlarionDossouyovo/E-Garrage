@@ -426,7 +426,6 @@ app.post('/api/webhooks', (req, res) => {
     return res.status(400).json({ success: false, message: 'URL required' });
   }
   
-  // Simulate webhook registration
   const webhook = {
     id: Date.now(),
     url,
@@ -437,14 +436,195 @@ app.post('/api/webhooks', (req, res) => {
   res.json({ success: true, webhook, message: 'Webhook registered' });
 });
 
-// Trigger webhook
 app.post('/api/webhooks/trigger', async (req, res) => {
   const { event, data } = req.body;
-  
-  // Simulate triggering webhooks
   console.log(`🔗 Webhook triggered: ${event}`, data);
-  
   res.json({ success: true, message: `Webhook ${event} triggered` });
+});
+
+// ============ PAYMENTS API ============
+const payments = require('./payments');
+
+app.post('/api/payments/stripe', async (req, res) => {
+  try {
+    const { amount, currency, email, metadata } = req.body;
+    const result = await payments.createStripePayment(amount, currency, email, metadata);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/payments/paypal', async (req, res) => {
+  try {
+    const { amount, currency } = req.body;
+    const result = await payments.createPayPalOrder(amount, currency);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/payments/invoice', (req, res) => {
+  const { order, user } = req.body;
+  const invoice = payments.generateInvoice(order, user, 0.20);
+  res.json({ success: true, invoice });
+});
+
+app.post('/api/payments/refund', async (req, res) => {
+  const { paymentId, amount, reason } = req.body;
+  const result = await payments.processRefund(paymentId, amount, reason);
+  res.json(result);
+});
+
+app.get('/api/payments/plans', (req, res) => {
+  res.json({ plans: payments.stripeConfig.plans });
+});
+
+// ============ COMMUNICATIONS API ============
+const communications = require('./communications');
+
+app.post('/api/communications/email', async (req, res) => {
+  try {
+    const { to, template, data } = req.body;
+    const result = await communications.sendEmail(to, template, data);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/communications/sms', async (req, res) => {
+  try {
+    const { to, message } = req.body;
+    const result = await communications.sendSMS(to, message);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/communications/push', async (req, res) => {
+  try {
+    const { userId, title, body, data } = req.body;
+    const result = await communications.sendPushNotification(userId, title, body, data);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/notifications/:userId', (req, res) => {
+  const notifications = communications.getUserNotifications(req.params.userId);
+  res.json({ notifications });
+});
+
+// ============ SECURITY API ============
+const security = require('./security');
+
+app.post('/api/security/rate-limit', (req, res) => {
+  const { key, type } = req.body;
+  const result = security.checkRateLimit(key, type);
+  res.json(result);
+});
+
+app.post('/api/security/2fa/enable', (req, res) => {
+  const { userId } = req.body;
+  const result = security.twoFactor.enable(userId);
+  res.json(result);
+});
+
+app.post('/api/security/2fa/verify', (req, res) => {
+  const { secret, code } = req.body;
+  const valid = security.twoFactor.verifyCode(secret, code);
+  res.json({ valid });
+});
+
+app.post('/api/security/password/validate', (req, res) => {
+  const { password } = req.body;
+  const result = security.validatePassword(password);
+  res.json(result);
+});
+
+app.post('/api/auth/token/refresh', (req, res) => {
+  const { token } = req.body;
+  const decoded = security.verifyToken(token);
+  if (decoded) {
+    const newToken = security.generateToken({ id: decoded.id, email: decoded.email });
+    res.json({ token: newToken });
+  } else {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+});
+
+// ============ ANALYTICS API ============
+const analytics = require('./analytics');
+
+app.post('/api/analytics/track', (req, res) => {
+  const { eventType, data } = req.body;
+  analytics.trackEvent(eventType, data);
+  res.json({ success: true });
+});
+
+app.get('/api/analytics/live', (req, res) => {
+  const metrics = analytics.getLiveMetrics();
+  res.json(metrics);
+});
+
+app.get('/api/analytics/report', (req, res) => {
+  const { period } = req.query;
+  const report = analytics.generateReport(period || 'daily');
+  res.json(report);
+});
+
+app.get('/api/analytics/funnel', (req, res) => {
+  const funnel = analytics.analyzeFunnel();
+  res.json(funnel);
+});
+
+// ============ AI API ============
+const advancedAI = require('./advanced-ai');
+
+app.post('/api/ai/chat', async (req, res) => {
+  try {
+    const { message, context } = req.body;
+    const result = await advancedAI.chatWithGPT(message, context);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/ai/rag', (req, res) => {
+  const { query } = req.body;
+  const result = advancedAI.ragChatbot(query);
+  res.json(result);
+});
+
+app.post('/api/ai/car-diagnosis', async (req, res) => {
+  try {
+    const { imageData } = req.body;
+    const result = await advancedAI.analyzeCarImage(imageData);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/ai/speech-to-text', async (req, res) => {
+  try {
+    const { audioData } = req.body;
+    const result = await advancedAI.speechToText(audioData);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/ai/sentiment', (req, res) => {
+  const { text } = req.body;
+  const result = advancedAI.analyzeSentiment(text);
+  res.json(result);
 });
 
 // ============ AI AGENTS API ============
