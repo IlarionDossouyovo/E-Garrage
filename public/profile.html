@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | E-GARRAGE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --gray: #64748b;
+      --border: #2a2a3a;
+      --premium: #ffd700;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #ffffff; line-height: 1.6; min-height: 100vh; }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, var(--dark) 0%, var(--dark-secondary) 100%);
+      z-index: -1;
+    }
+    
+    /* Header */
+    header { background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: fixed; width: 100%; top: 0; z-index: 1000; }
+    .header-inner { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 0.3rem; letter-spacing: 0.15em; text-decoration: none; }
+    .logo-E { font-family: 'Orbitron', sans-serif; font-weight: 900; background: linear-gradient(135deg, var(--neon-blue) 0%, #00ff88 50%, var(--neon-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-text { font-family: 'Orbitron', sans-serif; font-weight: 700; color: #ffffff; letter-spacing: 0.2em; }
+    .header-nav { display: flex; gap: 1.5rem; align-items: center; }
+    .header-nav a { color: #8892a0; text-decoration: none; font-weight: 500; transition: 0.3s; }
+    .header-nav a:hover, .header-nav a.active { color: var(--neon-blue); }
+    
+    /* Layout */
+    .profile-layout { display: flex; padding-top: 80px; min-height: 100vh; }
+    .sidebar { width: 280px; background: var(--dark-secondary); border-right: 1px solid var(--border); padding: 2rem 0; position: fixed; height: 100%; }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { padding: 1rem 2rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 1rem; }
+    .sidebar-menu li:hover { background: rgba(0, 212, 255, 0.1); }
+    .sidebar-menu li.active { background: rgba(0, 212, 255, 0.15); border-left: 3px solid var(--neon-blue); }
+    .sidebar-menu li.active span { color: var(--neon-blue); }
+    .menu-icon { font-size: 1.3rem; }
+    
+    .main { flex: 1; margin-left: 280px; padding: 2rem; }
+    
+    /* Page Title */
+    .page-header { margin-bottom: 2rem; }
+    .page-title { font-size: 2rem; font-family: 'Orbitron', sans-serif; font-weight: 700; }
+    
+    /* Profile Header */
+    .profile-header { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border);
+      border-radius: 20px; 
+      padding: 2.5rem; 
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .profile-avatar { 
+      width: 120px; 
+      height: 120px; 
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+    }
+    .profile-info h2 { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem; }
+    .profile-info p { color: #8892a0; margin-bottom: 1rem; }
+    .profile-badge { 
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+    .badge-free { background: rgba(100, 116, 139, 0.3); color: #8892a0; }
+    .badge-premium { background: linear-gradient(135deg, var(--premium), #b8860b); color: var(--dark); }
+    
+    /* Stats Cards */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border);
+      border-radius: 16px; 
+      padding: 1.5rem; 
+      text-align: center;
+    }
+    .stat-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .stat-number { font-size: 2rem; font-family: 'Orbitron', sans-serif; font-weight: 700; color: var(--neon-blue); }
+    .stat-label { color: #8892a0; font-size: 0.9rem; }
+    
+    /* Cards */
+    .section-card { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border);
+      border-radius: 16px; 
+      padding: 2rem; 
+      margin-bottom: 2rem;
+    }
+    .section-card h3 { font-size: 1.3rem; font-family: 'Orbitron', sans-serif; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .section-card h3 a { color: var(--neon-blue); font-size: 0.9rem; text-decoration: none; }
+    
+    /* Orders List */
+    .order-row { 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .order-row:last-child { border-bottom: none; }
+    .order-id { font-family: 'Orbitron', sans-serif; font-weight: 600; }
+    .order-date { color: #8892a0; font-size: 0.9rem; }
+    .order-status { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .order-total { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); }
+    
+    /* Form */
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .form-group { }
+    .form-label { display: block; margin-bottom: 0.5rem; color: #8892a0; }
+    .form-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--dark-secondary);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 1rem;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    .form-input:focus { outline: none; border-color: var(--neon-blue); }
+    .form-btn {
+      padding: 0.8rem 2rem;
+      background: linear-gradient(135deg, var(--neon-blue), #0099cc);
+      color: var(--dark);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Rajdhani', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 1rem;
+    }
+    .form-btn:hover { box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4); }
+    
+    /* Empty State */
+    .empty-state { text-align: center; padding: 3rem; color: #8892a0; }
+    .empty-state h4 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #ffffff; }
+    .btn-primary {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: linear-gradient(135deg, var(--neon-blue), #0099cc);
+      color: var(--dark);
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 1rem;
+    }
+    
+    /* Success Message */
+    .success-msg { 
+      display: none; 
+      padding: 1rem; 
+      background: rgba(0, 255, 136, 0.2); 
+      color: var(--neon-green); 
+      border-radius: 8px; 
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .success-msg.show { display: block; }
+    
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .profile-header { flex-direction: column; text-align: center; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo"><span class="logo-E">E</span><span class="logo-text">GARRAGE</span></a>
+      <nav class="header-nav">
+        <a href="/">Home</a>
+        <a href="/#products">Products</a>
+        <a href="/#contact">Contact</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="profile-layout">
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="active" onclick="showPage('overview')">
+          <span class="menu-icon">📊</span>
+          <span>Overview</span>
+        </li>
+        <li onclick="showPage('orders')">
+          <span class="menu-icon">📦</span>
+          <span>My Orders</span>
+        </li>
+        <li onclick="showPage('profile')">
+          <span class="menu-icon">👤</span>
+          <span>Edit Profile</span>
+        </li>
+        <li onclick="showPage('settings')">
+          <span class="menu-icon">⚙️</span>
+          <span>Settings</span>
+        </li>
+      </ul>
+    </aside>
+    
+    <main class="main">
+      <!-- Overview Page -->
+      <div id="overviewPage">
+        <div class="page-header">
+          <h1 class="page-title">My Dashboard</h1>
+        </div>
+        
+        <div class="profile-header">
+          <div class="profile-avatar" id="userAvatar">A</div>
+          <div class="profile-info">
+            <h2 id="userNameDisplay">Welcome</h2>
+            <p id="userEmailDisplay">user@email.com</p>
+            <span class="profile-badge badge-free" id="userBadge">Free Member</span>
+          </div>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-number" id="totalOrders">0</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-number" id="totalSpent">$0</div>
+            <div class="stat-label">Total Spent</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-number" id="loyaltyPoints">0</div>
+            <div class="stat-label">Loyalty Points</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎁</div>
+            <div class="stat-number" id="referrals">0</div>
+            <div class="stat-label">Referrals</div>
+          </div>
+        </div>
+        
+        <div class="section-card">
+          <h3>Recent Orders <a href="#" onclick="showPage('orders')">View All →</a></h3>
+          <div id="recentOrdersList"></div>
+        </div>
+      </div>
+      
+      <!-- Orders Page -->
+      <div id="ordersPage" style="display:none;">
+        <div class="page-header">
+          <h1 class="page-title">My Orders</h1>
+        </div>
+        <div class="section-card">
+          <div id="allOrdersList"></div>
+        </div>
+      </div>
+      
+      <!-- Profile Edit Page -->
+      <div id="profilePage" style="display:none;">
+        <div class="page-header">
+          <h1 class="page-title">Edit Profile</h1>
+        </div>
+        <div class="success-msg" id="saveSuccess">✓ Profile updated successfully!</div>
+        <div class="section-card">
+          <h3>Personal Information</h3>
+          <form onsubmit="saveProfile(event)">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-input" id="editUsername">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="editEmail" disabled>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="tel" class="form-input" id="editPhone" placeholder="+1 234 567 8900">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-input" id="editAddress" placeholder="Your address">
+              </div>
+            </div>
+            <button type="submit" class="form-btn">Save Changes</button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Settings Page -->
+      <div id="settingsPage" style="display:none;">
+        <div class="page-header">
+          <h1 class="page-title">Settings</h1>
+        </div>
+        <div class="section-card">
+          <h3>Account Settings</h3>
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label">Change Password</label>
+            <input type="password" class="form-input" placeholder="New password">
+          </div>
+          <button class="form-btn">Update Password</button>
+        </div>
+        <div class="section-card">
+          <h3>Notifications</h3>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--border);">
+            <span>Order Updates</span>
+            <input type="checkbox" checked>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--border);">
+            <span>Promotions</span>
+            <input type="checkbox">
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 0;">
+            <span>Newsletter</span>
+            <input type="checkbox" checked>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script>
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const token = localStorage.getItem('token');
+    
+    if (!user) {
+      alert('Please login first');
+      window.location.href = '/';
+    }
+    
+    // Initialize
+    document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
+    document.getElementById('userNameDisplay').textContent = user.username;
+    document.getElementById('userEmailDisplay').textContent = user.email;
+    document.getElementById('editUsername').value = user.username;
+    document.getElementById('editEmail').value = user.email;
+    
+    if (user.isPremium) {
+      document.getElementById('userBadge').textContent = 'Premium Member';
+      document.getElementById('userBadge').className = 'profile-badge badge-premium';
+    }
+    
+    // Load orders
+    loadOrders();
+    
+    async function loadOrders() {
+      try {
+        const res = await fetch('/api/orders', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const orders = await res.json();
+        
+        document.getElementById('totalOrders').textContent = orders.length;
+        document.getElementById('totalSpent').textContent = '$' + orders.reduce((s, o) => s + o.total, 0).toFixed(0);
+        document.getElementById('loyaltyPoints').textContent = orders.length * 100;
+        
+        const renderOrders = (list) => {
+          if (list.length === 0) {
+            return '<div class="empty-state"><h4>No orders yet</h4><p>Start shopping to see your orders here!</p><a href="/" class="btn-primary">Browse Products</a></div>';
+          }
+          return list.map(o => `
+            <div class="order-row">
+              <div>
+                <div class="order-id">#${o.id}</div>
+                <div class="order-date">${new Date(o.created_at).toLocaleDateString()}</div>
+              </div>
+              <span class="order-status status-${o.status}">${o.status}</span>
+              <div class="order-total">$${o.total.toFixed(2)}</div>
+            </div>
+          `).join('');
+        };
+        
+        document.getElementById('recentOrdersList').innerHTML = renderOrders(orders.slice(0, 3));
+        document.getElementById('allOrdersList').innerHTML = renderOrders(orders);
+        
+      } catch (e) {
+        console.log('Error loading orders');
+      }
+    }
+    
+    function showPage(page) {
+      document.querySelectorAll('.sidebar-menu li').forEach(l => l.classList.remove('active'));
+      event.target.closest('li').classList.add('active');
+      
+      document.querySelectorAll('[id$="Page"]').forEach(p => p.style.display = 'none');
+      document.getElementById(page + 'Page').style.display = 'block';
+    }
+    
+    async function saveProfile(e) {
+      e.preventDefault();
+      const username = document.getElementById('editUsername').value;
+      
+      try {
+        await fetch('/api/users/me', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ username })
+        });
+        
+        user.username = username;
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        document.getElementById('userNameDisplay').textContent = username;
+        document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+        document.getElementById('saveSuccess').classList.add('show');
+        setTimeout(() => document.getElementById('saveSuccess').classList.remove('show'), 3000);
+        
+      } catch (e) {
+        alert('Error saving profile');
+      }
+    }
+    
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

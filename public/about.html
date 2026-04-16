@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About E-GARRAGE | Next-Gen Automotive Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00d4ff;
+      --primary-dark: #0099cc;
+      --secondary: #00ff88;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --gray: #64748b;
+      --border: #2a2a3a;
+      --premium: #ffd700;
+      --premium-dark: #b8860b;
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #ffffff; line-height: 1.6; min-height: 100vh; }
+    
+    /* Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, var(--dark) 0%, var(--dark-secondary) 100%);
+      z-index: -1;
+    }
+    
+    /* Header */
+    header { background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: fixed; width: 100%; top: 0; z-index: 1000; }
+    .header-inner { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.8rem; font-weight: 900; display: flex; align-items: center; gap: 0.3rem; letter-spacing: 0.15em; text-decoration: none; }
+    .logo-E { font-family: 'Orbitron', sans-serif; font-weight: 900; background: linear-gradient(135deg, var(--neon-blue) 0%, #00ff88 50%, var(--neon-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-text { font-family: 'Orbitron', sans-serif; font-weight: 700; color: #ffffff; letter-spacing: 0.2em; }
+    nav { display: flex; gap: 2rem; align-items: center; }
+    nav a { text-decoration: none; color: #8892a0; font-weight: 500; transition: 0.3s; font-family: 'Rajdhani', sans-serif; }
+    nav a:hover, nav a.active { color: var(--neon-blue); }
+    
+    /* Hero Section */
+    .hero { padding: 12rem 2rem 6rem; text-align: center; position: relative; }
+    .hero h1 { font-size: 4rem; margin-bottom: 1rem; font-family: 'Orbitron', sans-serif; font-weight: 900; letter-spacing: 0.1em; background: linear-gradient(135deg, #ffffff, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-subtitle { font-size: 1.5rem; color: var(--gray); margin-bottom: 2rem; letter-spacing: 0.3em; text-transform: uppercase; }
+    .hero p { max-width: 700px; margin: 0 auto; font-size: 1.2rem; color: #8892a0; }
+    
+    /* Sections */
+    .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-title { font-size: 2.5rem; font-family: 'Orbitron', sans-serif; font-weight: 700; margin-bottom: 3rem; text-align: center; }
+    .section-title span { color: var(--neon-blue); }
+    
+    /* Mission Cards */
+    .mission-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .mission-card { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border);
+      border-radius: 20px; 
+      padding: 2.5rem; 
+      transition: 0.3s;
+    }
+    .mission-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 10px 40px rgba(0, 212, 255, 0.15); }
+    .mission-icon { font-size: 3rem; margin-bottom: 1.5rem; }
+    .mission-card h3 { font-size: 1.5rem; font-family: 'Orbitron', sans-serif; font-weight: 600; margin-bottom: 1rem; color: var(--neon-blue); }
+    .mission-card p { color: #8892a0; font-size: 1.1rem; }
+    
+    /* Timeline */
+    .timeline { position: relative; padding: 2rem 0; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--neon-blue), var(--neon-green));
+    }
+    .timeline-item { 
+      display: flex; 
+      justify-content: flex-end; 
+      padding-right: calc(50% + 2rem); 
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .timeline-item:nth-child(even) {
+      justify-content: flex-start;
+      padding-right: 0;
+      padding-left: calc(50% + 2rem);
+    }
+    .timeline-content {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      max-width: 400px;
+    }
+    .timeline-year {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--neon-blue);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      background: var(--neon-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--neon-blue);
+    }
+    
+    /* Team */
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+    .team-card { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border);
+      border-radius: 20px; 
+      padding: 2rem; 
+      text-align: center;
+      transition: 0.3s;
+    }
+    .team-card:hover { transform: translateY(-5px); border-color: var(--premium); }
+    .team-avatar { 
+      width: 120px; 
+      height: 120px; 
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      border-radius: 50%; 
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+    .team-name { font-size: 1.3rem; font-family: 'Orbitron', sans-serif; font-weight: 600; margin-bottom: 0.5rem; }
+    .team-role { color: var(--neon-blue); font-size: 1rem; margin-bottom: 1rem; }
+    .team-bio { color: #8892a0; font-size: 0.95rem; }
+    
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin: 3rem 0; }
+    .stat-card { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border);
+      border-radius: 16px; 
+      padding: 2rem; 
+      text-align: center;
+    }
+    .stat-number { font-size: 3rem; font-family: 'Orbitron', sans-serif; font-weight: 800; background: linear-gradient(135deg, var(--neon-blue), var(--neon-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-label { color: #8892a0; font-size: 1rem; margin-top: 0.5rem; }
+    
+    /* Values */
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .value-item { text-align: center; padding: 2rem; }
+    .value-icon { 
+      width: 80px; 
+      height: 80px; 
+      background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,255,136,0.2));
+      border: 2px solid var(--neon-blue);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+    .value-item h4 { font-size: 1.3rem; font-family: 'Orbitron', sans-serif; font-weight: 600; margin-bottom: 0.5rem; }
+    .value-item p { color: #8892a0; }
+    
+    /* CTA */
+    .cta-section { text-align: center; padding: 5rem 2rem; background: var(--dark-secondary); border-radius: 20px; margin: 3rem auto; max-width: 1200px; }
+    .cta-section h2 { font-size: 2.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; }
+    .cta-section p { color: #8892a0; margin-bottom: 2rem; font-size: 1.2rem; }
+    
+    /* Buttons */
+    .btn { padding: 0.8rem 2rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; border: none; text-decoration: none; display: inline-block; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+    .btn-primary { background: linear-gradient(135deg, var(--neon-blue), #0099cc); color: var(--dark); box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5); }
+    
+    /* Footer */
+    footer { background: var(--dark-secondary); padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); }
+    footer p { color: #8892a0; }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .timeline::before { left: 20px; }
+      .timeline-item, .timeline-item:nth-child(even) { padding-left: 50px; padding-right: 0; justify-content: flex-start; }
+      .timeline-dot { left: 20px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo"><span class="logo-E">E</span><span class="logo-text">GARRAGE</span></a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about" class="active">About</a>
+        <a href="/#products">Products</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <h1>ABOUT US</h1>
+    <div class="hero-subtitle">Pioneering the Future of Automotive</div>
+    <p>Discover how E-GARRAGE is revolutionizing the automotive industry through AI-powered solutions and cutting-edge technology.</p>
+  </section>
+  
+  <section class="section">
+    <h2 class="section-title">By The <span>Numbers</span></h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">50K+</div>
+        <div class="stat-label">Vehicles Processed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">AI Diagnostics/Day</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">99.9%</div>
+        <div class="stat-label">Accuracy Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Platform Availability</div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section">
+    <h2 class="section-title">Our <span>Mission</span></h2>
+    <div class="mission-grid">
+      <div class="mission-card">
+        <div class="mission-icon">🤖</div>
+        <h3>AI-Powered Diagnostics</h3>
+        <p>Leveraging advanced artificial intelligence to provide instant, accurate vehicle diagnostics and predictive maintenance alerts.</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-icon">🌐</div>
+        <h3>Global Connectivity</h3>
+        <p>Connecting vehicles, garages, and customers worldwide through a seamless digital ecosystem.</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-icon">⚡</div>
+        <h3>Instant Services</h3>
+        <p>Real-time scheduling,parts sourcing, and dropshipping for minimal downtime and maximum convenience.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section">
+    <h2 class="section-title">Our <span>Journey</span></h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2020</div>
+          <h3>Foundation</h3>
+          <p>E-GARRAGE Founded with vision to revolutionize automotive services</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2021</div>
+          <h3>AI Integration</h3>
+          <p>Launched AI diagnostic engine with 95% accuracy</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2022</div>
+          <h3>Global Expansion</h3>
+          <p>Expanded to 50+ countries with 10,000+ partner garages</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2023</div>
+          <h3>Dropshipping Network</h3>
+          <p>Launched automated parts sourcing and delivery system</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2024</div>
+          <h3>Connected Cars</h3>
+          <p>IoT integration for real-time vehicle monitoring</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section">
+    <h2 class="section-title">Core <span>Values</span></h2>
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-icon">🎯</div>
+        <h4>Precision</h4>
+        <p>Accuracy in every diagnosis and service</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">🚀</div>
+        <h4>Innovation</h4>
+        <p>Constantly pushing technology forward</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">💎</div>
+        <h4>Excellence</h4>
+        <p>Premium quality in everything we do</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section">
+    <h2 class="section-title">Leadership <span>Team</span></h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">👨‍💼</div>
+        <div class="team-name">Alex Chen</div>
+        <div class="team-role">Founder & CEO</div>
+        <div class="team-bio">20+ years in automotive tech. Former Tesla engineer.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍💻</div>
+        <div class="team-name">Sarah Miller</div>
+        <div class="team-role">CTO</div>
+        <div class="team-bio">AI/ML expert. Former Google DeepMind researcher.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👨‍🔧</div>
+        <div class="team-name">Marcus Johnson</div>
+        <div class="team-role">Chief Automotive Officer</div>
+        <div class="team-bio">Former Porsche master technician with 15 years experience.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍💼</div>
+        <div class="team-name">Elena Rodriguez</div>
+        <div class="team-role">VP Operations</div>
+        <div class="team-bio">Operations expert. Former Uber logistics lead.</div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta-section">
+    <h2>Join the <span style="color:var(--neon-blue)">Revolution</span></h2>
+    <p>Be part of the future of automotive technology</p>
+    <a href="/#products" class="btn btn-primary">Get Started</a>
+  </section>
+  
+  <footer>
+    <p>© 2024 E-GARRAGE. All rights reserved. | Next-Gen Automotive Platform</p>
+  </footer>
+</body>
+</html>

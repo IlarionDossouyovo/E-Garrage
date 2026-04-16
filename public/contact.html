@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact E-GARRAGE | Get in Touch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --gray: #64748b;
+      --border: #2a2a3a;
+      --premium: #ffd700;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #ffffff; line-height: 1.6; min-height: 100vh; }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, var(--dark) 0%, var(--dark-secondary) 100%);
+      z-index: -1;
+    }
+    
+    /* Header */
+    header { background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: fixed; width: 100%; top: 0; z-index: 1000; }
+    .header-inner { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.8rem; font-weight: 900; display: flex; align-items: center; gap: 0.3rem; letter-spacing: 0.15em; text-decoration: none; }
+    .logo-E { font-family: 'Orbitron', sans-serif; font-weight: 900; background: linear-gradient(135deg, var(--neon-blue) 0%, #00ff88 50%, var(--neon-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-text { font-family: 'Orbitron', sans-serif; font-weight: 700; color: #ffffff; letter-spacing: 0.2em; }
+    nav { display: flex; gap: 2rem; align-items: center; }
+    nav a { text-decoration: none; color: #8892a0; font-weight: 500; transition: 0.3s; }
+    nav a:hover, nav a.active { color: var(--neon-blue); }
+    
+    /* Hero */
+    .hero { padding: 12rem 2rem 4rem; text-align: center; }
+    .hero h1 { font-size: 3.5rem; font-family: 'Orbitron', sans-serif; font-weight: 900; letter-spacing: 0.1em; margin-bottom: 1rem; background: linear-gradient(135deg, #ffffff, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: #8892a0; font-size: 1.2rem; }
+    
+    /* Contact Grid */
+    .contact-section { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    
+    /* Contact Form */
+    .contact-form { background: var(--dark-card); border: 1px solid var(--border); border-radius: 20px; padding: 3rem; }
+    .form-title { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; font-weight: 600; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-label { display: block; margin-bottom: 0.5rem; color: #8892a0; font-weight: 500; }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      padding: 1rem;
+      background: var(--dark-secondary);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 1rem;
+      font-family: 'Rajdhani', sans-serif;
+      transition: 0.3s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    }
+    .form-textarea { min-height: 150px; resize: vertical; }
+    .form-select { cursor: pointer; }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--neon-blue), #0099cc);
+      color: var(--dark);
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Rajdhani', sans-serif;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5); }
+    
+    /* Contact Info */
+    .contact-info { padding: 2rem 0; }
+    .info-title { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; font-weight: 600; margin-bottom: 2rem; }
+    .info-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; }
+    .info-icon { 
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,255,136,0.2));
+      border: 2px solid var(--neon-blue);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .info-content h4 { font-size: 1.2rem; font-family: 'Orbitron', sans-serif; font-weight: 600; margin-bottom: 0.3rem; }
+    .info-content p, .info-content a { color: #8892a0; text-decoration: none; }
+    .info-content a:hover { color: var(--neon-blue); }
+    
+    /* Map Placeholder */
+    .map-section { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .map-container { 
+      background: var(--dark-card); 
+      border: 1px solid var(--border);
+      border-radius: 20px; 
+      height: 400px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .map-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(0,212,255,0.05) 50px, rgba(0,212,255,0.05) 51px),
+        repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0,212,255,0.05) 50px, rgba(0,212,255,0.05) 51px);
+    }
+    .map-text { position: relative; z-index: 1; text-align: center; }
+    .map-text h3 { font-size: 1.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem; }
+    .map-text p { color: #8892a0; }
+    
+    /* FAQ */
+    .faq-section { max-width: 800px; margin: 4rem auto; padding: 2rem; }
+    .faq-title { font-size: 2rem; font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 2rem; }
+    .faq-item { background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
+    .faq-question { 
+      padding: 1.5rem; 
+      cursor: pointer; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .faq-answer { 
+      padding: 0 1.5rem 1.5rem; 
+      color: #8892a0; 
+      display: none;
+    }
+    .faq-item.active .faq-answer { display: block; }
+    .faq-toggle { font-size: 1.5rem; transition: 0.3s; }
+    .faq-item.active .faq-toggle { transform: rotate(45deg); }
+    
+    /* Success Message */
+    .success-message {
+      display: none;
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--neon-green), #00cc66);
+      color: var(--dark);
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-weight: 700;
+      z-index: 2000;
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown {
+      from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
+      to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+    
+    /* Footer */
+    footer { background: var(--dark-secondary); padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); }
+    footer p { color: #8892a0; }
+    
+    @media (max-width: 768px) {
+      .contact-section { grid-template-columns: 1fr; gap: 2rem; }
+      .hero h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="success-message" id="successMessage">✓ Message sent successfully! We'll contact you soon.</div>
+  
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo"><span class="logo-E">E</span><span class="logo-text">GARRAGE</span></a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/#products">Products</a>
+        <a href="/#contact" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <h1>CONTACT US</h1>
+    <p>We'd love to hear from you. Get in touch with our team.</p>
+  </section>
+  
+  <section class="contact-section">
+    <div class="contact-form">
+      <h2 class="form-title">Send us a Message</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" id="name" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="email" placeholder="john@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <select class="form-select" id="subject">
+            <option value="">Select a topic...</option>
+            <option value="general">General Inquiry</option>
+            <option value="support">Technical Support</option>
+            <option value="partnership">Partnership Opportunities</option>
+            <option value="sales">Sales Question</option>
+            <option value="feedback">Feedback</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" id="message" placeholder="How can we help you?" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Send Message</button>
+      </form>
+    </div>
+    
+    <div class="contact-info">
+      <h2 class="info-title">Contact Information</h2>
+      
+      <div class="info-item">
+        <div class="info-icon">📧</div>
+        <div class="info-content">
+          <h4>Email</h4>
+          <a href="mailto:hello@egarrage.com">hello@egarrage.com</a>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div class="info-content">
+          <h4>Phone</h4>
+          <a href="tel:+1-800-E-GARRAGE">+1-800-E-GARRAGE</a>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div class="info-content">
+          <h4>Headquarters</h4>
+          <p>1000 Tech Boulevard<br>San Francisco, CA 94107</p>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-icon">🕐</div>
+        <div class="info-content">
+          <h4>Support Hours</h4>
+          <p>24/7 AI Support<br>Mon-Fri: 9AM-6PM PST</p>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-icon">💬</div>
+        <div class="info-content">
+          <h4>Social Media</h4>
+          <a href="#">Twitter</a> · <a href="#">LinkedIn</a> · <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="map-section">
+    <div class="map-container">
+      <div class="map-bg"></div>
+      <div class="map-text">
+        <h3>Global Presence</h3>
+        <p>Serving 50+ countries worldwide</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="faq-section">
+    <h2 class="faq-title">Frequently Asked Questions</h2>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>How do I get started with E-GARRAGE?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Simply sign up for free, browse our product catalog, and start ordering. Our AI system will guide you through the process.</div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What countries do you ship to?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">We ship to 50+ countries worldwide with automated customs handling. Check our shipping page for full list.</div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>How does the AI diagnostics work?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Upload your vehicle details or VIN, and our AI engine analyzes thousands of data points to provide accurate diagnostics.</div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Can I become a partner/supplier?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Yes! Contact us through the form above or email partners@egarrage.com for partnership opportunities.</div>
+    </div>
+  </section>
+  
+  <footer>
+    <p>© 2024 E-GARRAGE. All rights reserved. | Next-Gen Automotive Platform</p>
+  </footer>
+  
+  <script>
+    // Contact Form
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      // Save to local storage (demo)
+      const contactData = { name, email, subject, message, date: new Date().toISOString() };
+      localStorage.setItem('egarrage_contact', JSON.stringify(contactData));
+      
+      // Show success
+      const success = document.getElementById('successMessage');
+      success.style.display = 'block';
+      setTimeout(() => { success.style.display = 'none'; }, 5000);
+      
+      // Reset form
+      this.reset();
+    });
+    
+    // FAQ Toggle
+    function toggleFaq(el) {
+      const item = el.parentElement;
+      item.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

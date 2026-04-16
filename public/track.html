@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Order | E-GARRAGE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --gray: #64748b;
+      --border: #2a2a3a;
+      --premium: #ffd700;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #ffffff; line-height: 1.6; min-height: 100vh; }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, var(--dark) 0%, var(--dark-secondary) 100%);
+      z-index: -1;
+    }
+    
+    /* Header */
+    header { background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: fixed; width: 100%; top: 0; z-index: 1000; }
+    .header-inner { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.8rem; font-weight: 900; display: flex; align-items: center; gap: 0.3rem; letter-spacing: 0.15em; text-decoration: none; }
+    .logo-E { font-family: 'Orbitron', sans-serif; font-weight: 900; background: linear-gradient(135deg, var(--neon-blue) 0%, #00ff88 50%, var(--neon-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-text { font-family: 'Orbitron', sans-serif; font-weight: 700; color: #ffffff; letter-spacing: 0.2em; }
+    
+    /* Hero */
+    .hero { padding: 12rem 2rem 4rem; text-align: center; }
+    .hero h1 { font-size: 3rem; font-family: 'Orbitron', sans-serif; font-weight: 900; letter-spacing: 0.1em; margin-bottom: 1rem; background: linear-gradient(135deg, #ffffff, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: #8892a0; font-size: 1.2rem; margin-bottom: 3rem; }
+    
+    /* Track Form */
+    .track-section { max-width: 600px; margin: 0 auto; padding: 2rem; }
+    .track-form { display: flex; gap: 1rem; }
+    .track-input { flex: 1; padding: 1rem 1.5rem; background: var(--dark-card); border: 2px solid var(--border); border-radius: 10px; color: #ffffff; font-size: 1.1rem; font-family: 'Rajdhani', sans-serif; }
+    .track-input:focus { outline: none; border-color: var(--neon-blue); }
+    .track-btn { padding: 1rem 2rem; background: linear-gradient(135deg, var(--neon-blue), #0099cc); color: var(--dark); border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.3s; }
+    .track-btn:hover { box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5); transform: translateY(-2px); }
+    
+    /* Tracking Result */
+    .tracking-result { max-width: 800px; margin: 3rem auto; padding: 2rem; display: none; }
+    .tracking-result.show { display: block; }
+    
+    .order-header { background: var(--dark-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .order-id { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; }
+    .order-status { padding: 0.5rem 1.5rem; border-radius: 30px; font-weight: 700; text-transform: uppercase; }
+    .status-pending { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+    .status-processing { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
+    .status-shipped { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+    .status-delivered { background: rgba(0, 255, 136, 0.3); color: #00ff88; }
+    
+    .order-items { background: var(--dark-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; }
+    .order-items h3 { font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; }
+    .order-item { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+    .order-item:last-child { border-bottom: none; }
+    .item-name { font-weight: 600; }
+    .item-qty { color: #8892a0; }
+    .item-price { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); }
+    
+    /* Timeline */
+    .tracking-timeline { background: var(--dark-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; }
+    .tracking-timeline h3 { font-family: 'Orbitron', sans-serif; margin-bottom: 2rem; }
+    
+    .timeline-track { position: relative; padding-left: 30px; }
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    
+    .timeline-step { position: relative; margin-bottom: 2rem; padding-left: 1rem; }
+    .timeline-step:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -26px;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .timeline-step.active .timeline-dot {
+      background: var(--neon-blue);
+      box-shadow: 0 0 15px var(--neon-blue);
+    }
+    .timeline-step.completed .timeline-dot {
+      background: var(--neon-green);
+      box-shadow: 0 0 15px var(--neon-green);
+    }
+    .step-title { font-weight: 700; margin-bottom: 0.3rem; }
+    .step-date { color: #8892a0; font-size: 0.9rem; }
+    
+    /* Shipping Info */
+    .shipping-info { background: var(--dark-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-top: 2rem; }
+    .shipping-info h4 { font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; }
+    .shipping-info p { color: #8892a0; }
+    
+    /* No Order */
+    .no-order { text-align: center; padding: 3rem; color: #8892a0; }
+    .no-order h3 { font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Orbitron', sans-serif; }
+    
+    /* Footer */
+    footer { background: var(--dark-secondary); padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); margin-top: 4rem; }
+    footer p { color: #8892a0; }
+    
+    @media (max-width: 768px) {
+      .track-form { flex-direction: column; }
+      .order-header { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo"><span class="logo-E">E</span><span class="logo-text">GARRAGE</span></a>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <h1>TRACK ORDER</h1>
+    <p>Enter your order number to track in real-time</p>
+    
+    <div class="track-section">
+      <form class="track-form" onsubmit="trackOrder(event)">
+        <input type="text" class="track-input" id="orderNum" placeholder="Order # (e.g., 1, 2, 3...)" required>
+        <button type="submit" class="track-btn">Track</button>
+      </form>
+    </div>
+  </section>
+  
+  <div class="tracking-result" id="trackingResult">
+    <div class="order-header">
+      <div>
+        <div class="order-id" id="displayOrderId">Order #1</div>
+        <p style="color:#8892a0;margin-top:0.5rem;">Placed on <span id="orderDate"></span></p>
+      </div>
+      <div class="order-status" id="displayStatus">Processing</div>
+    </div>
+    
+    <div class="order-items">
+      <h3>Order Details</h3>
+      <div id="orderItemsList"></div>
+      <div class="order-item">
+        <span>Total</span>
+        <span class="item-price" id="orderTotal"></span>
+      </div>
+    </div>
+    
+    <div class="tracking-timeline">
+      <h3>Tracking Timeline</h3>
+      <div class="timeline-track">
+        <div class="timeline-step completed" id="step1">
+          <div class="timeline-dot"></div>
+          <div class="step-title">Order Placed</div>
+          <div class="step-date" id="date1"></div>
+        </div>
+        <div class="timeline-step" id="step2">
+          <div class="timeline-dot"></div>
+          <div class="step-title">Payment Confirmed</div>
+          <div class="step-date" id="date2"></div>
+        </div>
+        <div class="timeline-step" id="step3">
+          <div class="timeline-dot"></div>
+          <div class="step-title">Processing</div>
+          <div class="step-date" id="date3"></div>
+        </div>
+        <div class="timeline-step" id="step4">
+          <div class="timeline-dot"></div>
+          <div class="step-title">Shipped</div>
+          <div class="step-date" id="date4"></div>
+        </div>
+        <div class="timeline-step" id="step5">
+          <div class="timeline-dot"></div>
+          <div class="step-title">Delivered</div>
+          <div class="step-date" id="date5"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="shipping-info">
+      <h4>Shipping Address</h4>
+      <p id="shippingAddress"></p>
+      <br>
+      <h4>Tracking Number</h4>
+      <p id="trackingNumber">-</p>
+    </div>
+  </div>
+  
+  <div class="no-order" id="noOrder" style="display:none;">
+    <h3>Order Not Found</h3>
+    <p>Please check your order number and try again.<br>Make sure you're logged in to see your orders.</p>
+  </div>
+  
+  <footer>
+    <p>© 2024 E-GARRAGE. All rights reserved. | Next-Gen Automotive Platform</p>
+  </footer>
+  
+  <script>
+    async function trackOrder(e) {
+      e.preventDefault();
+      const orderId = document.getElementById('orderNum').value;
+      const token = localStorage.getItem('token');
+      
+      document.getElementById('trackingResult').classList.remove('show');
+      document.getElementById('noOrder').style.display = 'none';
+      
+      try {
+        const res = await fetch('/api/orders/' + orderId, {
+          headers: token ? { 'Authorization': 'Bearer ' + token } : {}
+        });
+        
+        if (!res.ok) throw new Error('Order not found');
+        
+        const order = await res.json();
+        
+        // Show order details
+        document.getElementById('displayOrderId').textContent = '#' + order.id;
+        document.getElementById('orderDate').textContent = new Date(order.created_at).toLocaleDateString();
+        
+        // Status
+        const statusEl = document.getElementById('displayStatus');
+        statusEl.textContent = order.status;
+        statusEl.className = 'order-status status-' + order.status;
+        
+        // Items
+        const itemsList = document.getElementById('orderItemsList');
+        if (order.items && order.items.length > 0) {
+          itemsList.innerHTML = order.items.map(item => `
+            <div class="order-item">
+              <div>
+                <div class="item-name">${item.name}</div>
+                <div class="item-qty">Qty: ${item.quantity}</div>
+              </div>
+              <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+            </div>
+          `).join('');
+        } else {
+          itemsList.innerHTML = '<div class="order-item"><span>Demo Product</span><span class="item-price">$49.99</span></div>';
+        }
+        
+        document.getElementById('orderTotal').textContent = '$' + order.total.toFixed(2);
+        
+        // Timeline
+        const baseDate = new Date(order.created_at);
+        document.getElementById('date1').textContent = baseDate.toLocaleString();
+        document.getElementById('date2').textContent = new Date(baseDate.getTime() + 60000).toLocaleString();
+        
+        if (order.status === 'pending') {
+          updateTimeline(['step1']);
+        } else if (order.status === 'processing') {
+          updateTimeline(['step1', 'step2', 'step3']);
+        } else if (order.status === 'shipped') {
+          updateTimeline(['step1', 'step2', 'step3', 'step4']);
+          document.getElementById('date4').textContent = new Date(baseDate.getTime() + 172800000).toLocaleString();
+          document.getElementById('trackingNumber').textContent = 'EG' + order.id + 'TRACK' + Math.random().toString(36).substr(2, 8).toUpperCase();
+        } else if (order.status === 'delivered') {
+          updateTimeline(['step1', 'step2', 'step3', 'step4', 'step5']);
+          document.getElementById('date4').textContent = new Date(baseDate.getTime() + 172800000).toLocaleString();
+          document.getElementById('date5').textContent = new Date(baseDate.getTime() + 432000000).toLocaleString();
+          document.getElementById('trackingNumber').textContent = 'EG' + order.id + 'TRACK' + Math.random().toString(36).substr(2, 8).toUpperCase();
+        }
+        
+        // Shipping
+        document.getElementById('shippingAddress').textContent = order.shipping_address || 'Not provided';
+        
+        document.getElementById('trackingResult').classList.add('show');
+        
+      } catch (error) {
+        document.getElementById('noOrder').style.display = 'block';
+      }
+    }
+    
+    function updateTimeline(steps) {
+      for (let i = 1; i <= 5; i++) {
+        const step = document.getElementById('step' + i);
+        step.classList.remove('active', 'completed');
+        if (steps.includes('step' + i)) {
+          step.classList.add(i === steps.length ? 'active' : 'completed');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
