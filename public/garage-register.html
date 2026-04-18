@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription Garage - E-GARRAGE Partner</title>
+  <meta name="description" content="Inscrivez votre garage sur E-GARRAGE et rejoignez notre réseau de partenaires en Afrique et dans le monde.">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --premium: #ffd700;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --border: #2a2a3a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #fff; }
+    a { text-decoration: none; color: inherit; }
+    
+    /* Header */
+    header { 
+      background: var(--dark-secondary); 
+      border-bottom: 1px solid var(--border); 
+      padding: 1.2rem 3rem; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { 
+      font-family: 'Orbitron', sans-serif; 
+      font-size: 1.8rem; 
+      font-weight: 700; 
+      letter-spacing: 3px;
+    }
+    .logo span { color: var(--neon-blue); }
+    .logo::before { content: '⚡ '; }
+    nav { display: flex; gap: 2rem; }
+    nav a { 
+      color: #8892a0; 
+      font-weight: 500; 
+      transition: 0.3s;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+    }
+    nav a:hover { color: var(--neon-blue); }
+    
+    /* Hero */
+    .hero {
+      background: linear-gradient(180deg, var(--dark) 0%, rgba(0, 212, 255, 0.08) 50%, var(--dark) 100%);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      letter-spacing: 3px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: #a0a8b8;
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    /* Form Container */
+    .container { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+    
+    .form-card {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem;
+      position: relative;
+    }
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      border-radius: 3px;
+    }
+    
+    .form-section {
+      margin-bottom: 2.5rem;
+    }
+    .form-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      color: var(--neon-blue);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .form-section-title i { font-size: 1.3rem; }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .form-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .form-full { grid-column: span 2; }
+    
+    .form-group { margin-bottom: 0.5rem; }
+    .form-group label {
+      display: block;
+      color: #8892a0;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .form-group label .required { color: #ff6b6b; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      background: var(--dark-secondary);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+    }
+    .form-group input::placeholder { color: #64748b; }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    
+    .form-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238892a0' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: calc(100% - 1rem) center;
+    }
+    .form-group select option { background: var(--dark-card); color: #fff; }
+    
+    /* Services Checkboxes */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .service-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem;
+      background: var(--dark-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .service-checkbox:hover { border-color: var(--neon-blue); }
+    .service-checkbox input {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--neon-blue);
+    }
+    .service-checkbox span { color: #a0a8b8; font-size: 0.95rem; }
+    
+    /* File Upload */
+    .file-upload {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .file-upload:hover { border-color: var(--neon-blue); }
+    .file-upload i { font-size: 2.5rem; color: var(--neon-blue); margin-bottom: 1rem; }
+    .file-upload p { color: #64748b; }
+    .file-upload input { display: none; }
+    
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 1.3rem;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      color: var(--dark);
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 1rem;
+    }
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0, 212, 255, 0.4);
+    }
+    
+    /* Success Message */
+    .success-message {
+      display: none;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid var(--neon-green);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .success-message.show { display: block; }
+    .success-message h3 { color: var(--neon-green); font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem; }
+    .success-message p { color: #a0a8b8; }
+    
+    /* Countries List */
+    .country-select {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+    }
+    .country-option {
+      padding: 0.8rem;
+      background: var(--dark-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.85rem;
+    }
+    .country-option:hover, .country-option.selected {
+      border-color: var(--neon-blue);
+      background: rgba(0, 212, 255, 0.1);
+    }
+    .country-option .flag { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
+    
+    /* Benefits */
+    .benefits-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .benefit-card {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .benefit-card:hover { border-color: var(--neon-blue); transform: translateY(-5px); }
+    .benefit-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .benefit-card h4 { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .benefit-card p { color: #64748b; font-size: 0.85rem; }
+    
+    /* Footer */
+    footer {
+      background: var(--dark-secondary);
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    footer p { color: #64748b; }
+    footer a { color: var(--neon-blue); }
+    
+    @media (max-width: 768px) {
+      .form-grid, .form-grid-3, .services-grid, .benefits-section, .country-select { grid-template-columns: 1fr; }
+      .form-full { grid-column: span 1; }
+      .hero h1 { font-size: 2rem; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">E-<span>GARRAGE</span></div>
+    <nav>
+      <a href="/">Accueil</a>
+      <a href="/services">Services</a>
+      <a href="/blog-market">Blog</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+  
+  <section class="hero">
+    <h1>Inscrivez Votre <span>Garage</span></h1>
+    <p>Rejoignez le réseau E-GARRAGE et donnez visibilité à votre garage dans votre pays et en Afrique.</p>
+  </section>
+  
+  <div class="container">
+    <!-- Benefits -->
+    <div class="benefits-section">
+      <div class="benefit-card">
+        <div class="benefit-icon">🌍</div>
+        <h4>Visibilité Nationale</h4>
+        <p>Appear in search results for your country</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📱</div>
+        <h4>Gestion Digitale</h4>
+        <p>Digital tools to manage your garage</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🤝</div>
+        <h4>Partenaires</h4>
+        <p>Connect with suppliers & distributors</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📈</div>
+        <h4>Formation IA</h4>
+        <p>Access to AI training programs</p>
+      </div>
+    </div>
+    
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+      <h3>✅ Inscription réussie!</h3>
+      <p>Votre garage a été enregistré. Nous vous contacterons sous 24-48h pour confirmer votre inscription.</p>
+    </div>
+    
+    <!-- Registration Form -->
+    <div class="form-card">
+      <form id="garageForm">
+        <!-- Section 1: Company Info -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fas fa-building"></i> Informations Entreprise</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nom du Garage *</label>
+              <input type="text" id="garageName" placeholder="Ex: Garage ABC" required>
+            </div>
+            <div class="form-group">
+              <label>Nom de l'Entreprise *</label>
+              <input type="text" id="companyName" placeholder="Ex: SARL Garage ABC" required>
+            </div>
+            <div class="form-group">
+              <label>Numéro RCCM</label>
+              <input type="text" id="rccm" placeholder="N° RCCM">
+            </div>
+            <div class="form-group">
+              <label>Numéro NCI/IFU</label>
+              <input type="text" id="nif" placeholder="N° NCI ou IFU">
+            </div>
+            <div class="form-group form-full">
+              <label>Description du Garage</label>
+              <textarea id="description" placeholder="Décrivez vos services, années d'expérience, spécialisations..."></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Section 2: Contact Info -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fas fa-address-card"></i> Coordonnées</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nom du Responsable *</label>
+              <input type="text" id="contactName" placeholder="Votre nom complet" required>
+            </div>
+            <div class="form-group">
+              <label>Fonction *</label>
+              <select id="contactRole" required>
+                <option value="">Sélectionner...</option>
+                <option value="proprietaire">Propriétaire</option>
+                <option value="gerant">Gérant</option>
+                <option value="mecanicien">Mécanicien</option>
+                <option value="technicien">Technicien</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" id="email" placeholder="email@exemple.com" required>
+            </div>
+            <div class="form-group">
+              <label>Téléphone Principal *</label>
+              <input type="tel" id="phone" placeholder="+229 01 234 567 89" required>
+            </div>
+            <div class="form-group">
+              <label>WhatsApp</label>
+              <input type="tel" id="whatsapp" placeholder="+229 01 234 567 89">
+            </div>
+            <div class="form-group">
+              <label>Site Web</label>
+              <input type="url" id="website" placeholder="https://mon-garage.com">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Section 3: Location -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fas fa-map-marker-alt"></i> Localisation</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Pays *</label>
+              <select id="country" required>
+                <option value="">Sélectionner un pays...</option>
+                <option value="BJ">🇧🇯 Benin</option>
+                <option value="CI">🇨🇮 Côte d'Ivoire</option>
+                <option value="SN">🇸🇳 Sénégal</option>
+                <option value="CM">🇨🇲 Cameroun</option>
+                <option value="GH">🇬🇭 Ghana</option>
+                <option value="NG">🇳🇬 Nigeria</option>
+                <option value="KE">🇰🇪 Kenya</option>
+                <option value="TG">🇹🇬 Togo</option>
+                <option value="BF">🇧🇫 Burkina Faso</option>
+                <option value="ML">🇲🇱 Mali</option>
+                <option value="NE">🇳🇪 Niger</option>
+                <option value="CD">🇨🇩 RDC</option>
+                <option value="GA">🇬🇦 Gabon</option>
+                <option value="MA">🇲🇦 Maroc</option>
+                <option value="DZ">🇩🇿 Algérie</option>
+                <option value="TN">🇹🇳 Tunisie</option>
+                <option value="FR">🇫🇷 France</option>
+                <option value="OTHER">🌍 Autre pays</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ville *</label>
+              <input type="text" id="city" placeholder="Ex: Cotonou" required>
+            </div>
+            <div class="form-group">
+              <label>Quartier/Zone</label>
+              <input type="text" id="district" placeholder="Ex: Akwa">
+            </div>
+            <div class="form-group">
+              <label>Adresse Postale</label>
+              <input type="text" id="address" placeholder="Adresse complète">
+            </div>
+            <div class="form-group form-full">
+              <label>Google Maps (URL)</label>
+              <input type="url" id="mapUrl" placeholder="https://maps.google.com/...">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Section 4: Services -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fas fa-tools"></i> Services Proposés</h3>
+          <div class="services-grid">
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="mecanique">
+              <span>Mécanique auto</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="electrique">
+              <span>Électricité auto</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="carrosserie">
+              <span>Carrosserie</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="peinture">
+              <span>Peinture</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="pneumatique">
+              <span>Pneumatique</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="diagnostic">
+              <span>Diagnostic IA</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="vidange">
+              <span>Vidange/Huile</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="freinage">
+              <span>Freinage</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="batterie">
+              <span>Batterie</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="climatisation">
+              <span>Climatisation</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="revision">
+              <span>Révision périodique</span>
+            </label>
+            <label class="service-checkbox">
+              <input type="checkbox" name="service" value="autre">
+              <span>Autres</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Section 5: Brands & Capacity -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fas fa-car"></i> Marque de véhicules & Capacité</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Marques traitées</label>
+              <input type="text" id="brands" placeholder="Ex: Toyota, Honda, Hyundai...">
+            </div>
+            <div class="form-group">
+              <label>Nombre de mécaniciens</label>
+              <select id="staffSize">
+                <option value="">Sélectionner...</option>
+                <option value="1-2">1-2 personnes</option>
+                <option value="3-5">3-5 personnes</option>
+                <option value="6-10">6-10 personnes</option>
+                <option value="10+">Plus de 10</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Capacité d'accueil (véhicules)</label>
+              <select id="capacity">
+                <option value="">Sélectionner...</option>
+                <option value="1-2">1-2 véhicules</option>
+                <option value="3-5">3-5 véhicules</option>
+                <option value="6-10">6-10 véhicules</option>
+                <option value="10+">Plus de 10</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Années d'existence</label>
+              <select id="years">
+                <option value="">Sélectionner...</option>
+                <option value="0-1">Moins d'1 an</option>
+                <option value="1-3">1-3 ans</option>
+                <option value="3-5">3-5 ans</option>
+                <option value="5-10">5-10 ans</option>
+                <option value="10+">Plus de 10 ans</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Section 6: Documents -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fas fa-file-alt"></i> Documents (Optionnel)</h3>
+          <div class="form-grid form-grid-3">
+            <div class="form-group">
+              <label>Logo Garage</label>
+              <div class="file-upload" onclick="document.getElementById('logoInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Cliquez pour uploader</p>
+                <input type="file" id="logoInput" accept="image/*">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Photo façade</label>
+              <div class="file-upload" onclick="document.getElementById('photoInput').click()">
+                <i class="fas fa-camera"></i>
+                <p>Cliquez pour uploader</p>
+                <input type="file" id="photoInput" accept="image/*">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Certifications</label>
+              <div class="file-upload" onclick="document.getElementById('certInput').click()">
+                <i class="fas fa-certificate"></i>
+                <p>Cliquez pour uploader</p>
+                <input type="file" id="certInput" accept=".pdf,.jpg,.png">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Submit -->
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-paper-plane"></i> Soumettre ma demande
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="logo">E-<span>GARRAGE</span></div>
+    <p>📧 electronbusiness@gmail.com | 📞 +229 01 977 003 47 | 📍 Cotonou, République du Benin</p>
+    <p>© 2024 E-GARRAGE | <a href="/terms">Conditions</a> | <a href="/privacy">Confidentialité</a></p>
+  </footer>
+  
+  <script>
+    document.getElementById('garageForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Collect form data
+      const formData = {
+        garageName: document.getElementById('garageName').value,
+        companyName: document.getElementById('companyName').value,
+        rccm: document.getElementById('rccm').value,
+        nif: document.getElementById('nif').value,
+        description: document.getElementById('description').value,
+        contactName: document.getElementById('contactName').value,
+        contactRole: document.getElementById('contactRole').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        website: document.getElementById('website').value,
+        country: document.getElementById('country').value,
+        city: document.getElementById('city').value,
+        district: document.getElementById('district').value,
+        address: document.getElementById('address').value,
+        mapUrl: document.getElementById('mapUrl').value,
+        services: Array.from(document.querySelectorAll('input[name="service"]:checked')).map(cb => cb.value),
+        brands: document.getElementById('brands').value,
+        staffSize: document.getElementById('staffSize').value,
+        capacity: document.getElementById('capacity').value,
+        years: document.getElementById('years').value,
+        registeredAt: new Date().toISOString()
+      };
+      
+      // Save to localStorage (in production, send to server)
+      const garages = JSON.parse(localStorage.getItem('egarrage_garages') || '[]');
+      garages.push(formData);
+      localStorage.setItem('egarrage_garages', JSON.stringify(garages));
+      
+      // Show success
+      document.getElementById('successMessage').classList.add('show');
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Reset form
+      document.getElementById('garageForm').reset();
+    });
+  </script>
+</body>
+</html>
