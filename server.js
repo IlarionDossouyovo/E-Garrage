@@ -430,6 +430,10 @@ app.get('/blog-opportunities', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'blog-opportunities.html'));
 });
 
+app.get('/services', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'services.html'));
+});
+
 // ============ WEBHOOKS API ============
 app.post('/api/webhooks', (req, res) => {
   const { url, events } = req.body;

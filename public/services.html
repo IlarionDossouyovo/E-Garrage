@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - E-GARRAGE | Next-Gen Automotive Platform</title>
+  <meta name="description" content="Découvrez tous les services E-GARRAGE: e-commerce auto, IA, dropshipping, diagnostics, marketplace.">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --premium: #ffd700;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --border: #2a2a3a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #fff; }
+    a { text-decoration: none; color: inherit; }
+    
+    /* Header */
+    header { 
+      background: var(--dark-secondary); 
+      border-bottom: 1px solid var(--border); 
+      padding: 1.2rem 3rem; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { 
+      font-family: 'Orbitron', sans-serif; 
+      font-size: 1.8rem; 
+      font-weight: 700; 
+      letter-spacing: 3px;
+    }
+    .logo span { color: var(--neon-blue); }
+    .logo::before { content: '⚡ '; }
+    nav { display: flex; gap: 2rem; }
+    nav a { 
+      color: #8892a0; 
+      font-weight: 500; 
+      transition: 0.3s;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+    }
+    nav a:hover, nav a.active { 
+      color: var(--neon-blue); 
+      background: rgba(0, 212, 255, 0.1); 
+    }
+    
+    /* Hero */
+    .hero {
+      background: linear-gradient(180deg, var(--dark) 0%, rgba(0, 212, 255, 0.1) 50%, var(--dark) 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 20%, rgba(0, 212, 255, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 40%);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0, 212, 255, 0.15);
+      border: 1px solid var(--neon-blue);
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      color: var(--neon-blue);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.2rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 4px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: #a0a8b8;
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      color: var(--dark);
+      padding: 1rem 2.5rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+    .hero-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0, 212, 255, 0.4);
+    }
+    
+    /* Services Grid */
+    .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .section-header h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+    }
+    .section-header h2 span { color: var(--neon-blue); }
+    .section-header p { color: #8892a0; font-size: 1.1rem; }
+    
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    
+    .service-card {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: 0.4s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      transform: scaleX(0);
+      transition: 0.4s;
+    }
+    .service-card:hover {
+      border-color: var(--neon-blue);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 255, 136, 0.1));
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .service-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .service-card p {
+      color: #8892a0;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .service-features {
+      list-style: none;
+    }
+    .service-features li {
+      color: #a0a8b8;
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.95rem;
+    }
+    .service-features li::before {
+      content: '✓';
+      color: var(--neon-green);
+      font-weight: bold;
+    }
+    .service-price {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .price { 
+      font-family: 'Orbitron', sans-serif; 
+      font-size: 1.5rem; 
+      color: var(--neon-blue); 
+    }
+    .price span { font-size: 0.8rem; color: #64748b; }
+    .service-btn {
+      color: var(--neon-green);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .service-btn:hover { color: var(--neon-blue); }
+    
+    /* AI Section */
+    .ai-section {
+      background: linear-gradient(135deg, var(--dark-card), var(--dark-secondary));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3rem;
+      margin: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .ai-section::before {
+      content: '🤖';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      font-size: 10rem;
+      opacity: 0.05;
+    }
+    .ai-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+    .ai-section h2 span { color: var(--neon-blue); }
+    .ai-section > p { color: #8892a0; font-size: 1.1rem; margin-bottom: 2rem; }
+    
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .ai-feature {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .ai-feature:hover { border-color: var(--neon-blue); }
+    .ai-feature-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .ai-feature h4 { 
+      font-family: 'Orbitron', sans-serif; 
+      font-size: 0.9rem; 
+      margin-bottom: 0.5rem; 
+    }
+    .ai-feature p { color: #64748b; font-size: 0.85rem; }
+    
+    /* Stats Section */
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin: 4rem 0;
+    }
+    .stat-box {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .stat-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      color: var(--neon-blue);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label { color: #8892a0; font-size: 1rem; }
+    
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      border-radius: 24px;
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23000' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+    .cta-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+      position: relative;
+    }
+    .cta-section p {
+      color: var(--dark);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      position: relative;
+    }
+    .cta-btn {
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+      transition: 0.3s;
+    }
+    .cta-btn-primary {
+      background: var(--dark);
+      color: var(--neon-blue);
+    }
+    .cta-btn-secondary {
+      background: transparent;
+      border: 2px solid var(--dark);
+      color: var(--dark);
+    }
+    .cta-btn:hover { transform: translateY(-3px); }
+    
+    /* Footer */
+    footer {
+      background: var(--dark-secondary);
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .footer-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .footer-logo span { color: var(--neon-blue); }
+    footer p { color: #64748b; }
+    footer a { color: var(--neon-blue); }
+    
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .ai-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-section { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .services-grid, .ai-grid, .stats-section { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
+      nav { display: none; }
+      .cta-buttons { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">E-<span>GARRAGE</span></div>
+    <nav>
+      <a href="/">Accueil</a>
+      <a href="/services" class="active">Services</a>
+      <a href="/blog-market">Blog</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+  
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">⚡ PLATEFORME COMPLÈTE</div>
+      <h1>Nos <span>Services</span></h1>
+      <p>Découvrez comment E-GARRAGE transforme l'industrie automobile en Afrique avec des solutions innovantes et accessibles.</p>
+      <a href="/contact" class="hero-cta">
+        <span>Contactez-nous</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </section>
+  
+  <div class="container">
+    <!-- Stats -->
+    <div class="stats-section">
+      <div class="stat-box">
+        <div class="stat-icon">🏪</div>
+        <div class="stat-value">500+</div>
+        <div class="stat-label">Partenaires</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">🛍️</div>
+        <div class="stat-value">10K+</div>
+        <div class="stat-label">Produits</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">🤖</div>
+        <div class="stat-value">6</div>
+        <div class="stat-label">AI Agents</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">🌍</div>
+        <div class="stat-value">15+</div>
+        <div class="stat-label">Pays couverts</div>
+      </div>
+    </div>
+    
+    <!-- Main Services -->
+    <div class="section-header">
+      <h2>Nos <span>Services</span></h2>
+      <p>Des solutions complètes pour tous vos besoins automobiles</p>
+    </div>
+    
+    <div class="services-grid">
+      <!-- E-Commerce -->
+      <div class="service-card">
+        <div class="service-icon">🛒</div>
+        <h3>E-Commerce Auto</h3>
+        <p>Plateforme de vente en ligne complète avec gestion produits, panier, paiement et livraison.</p>
+        <ul class="service-features">
+          <li> Catalogue produits illimité</li>
+          <li> Paiement sécurisé</li>
+          <li> Gestion des commandes</li>
+          <li> Suivi en temps réel</li>
+        </ul>
+        <div class="service-price">
+          <div class="price">À partir <span>de 50,000 XOF</span></div>
+          <a href="/contact" class="service-btn">En savoir <i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+      
+      <!-- Dropshipping -->
+      <div class="service-card">
+        <div class="service-icon">📦</div>
+        <h3>Dropshipping Auto</h3>
+        <p> Système de distribution sans stock avec gestion fournisseurs et livraison automate.</p>
+        <ul class="service-features">
+          <li> 100+ fournisseurs directs</li>
+          <li> Automatisation complète</li>
+          <li> Suivi colis intégré</li>
+          <li> Marges optimisées</li>
+        </ul>
+        <div class="service-price">
+          <div class="price">À partir <span>de 100,000 XOF</span></div>
+          <a href="/contact" class="service-btn">En savoir <i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+      
+      <!-- AI Diagnostics -->
+      <div class="service-card">
+        <div class="service-icon">🔧</div>
+        <h3>IA Diagnostic</h3>
+        <p> Intelligence artificielle pour diagnostics véhicule, analyse d'images et recommandations.</p>
+        <ul class="service-features">
+          <li> Diagnostic par photo</li>
+          <li> Analyse发动机性能</li>
+          <li> Recommandations pièces</li>
+          <li> Historique client</li>
+        </ul>
+        <div class="service-price">
+          <div class="price">À partir <span>de 25,000 XOF/mois</span></div>
+          <a href="/contact" class="service-btn">En savoir <i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+      
+      <!-- Marketplace -->
+      <div class="service-card">
+        <div class="service-icon">🚗</div>
+        <h3>Marketplace Véhicules</h3>
+        <p> Plateforme de vente et achat de véhicules neufs et occasions avec verification.</p>
+        <ul class="service-features">
+          <li> Annonces illimitées</li>
+          <li> Vérification véhicule</li>
+          <li> Finance & crédit</li>
+          <li> Garantie included</li>
+        </ul>
+        <div class="service-price">
+          <div class="price">À partir <span>de 15,000 XOF/mois</span></div>
+          <a href="/contact" class="service-btn">En savoir <i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+      
+      <!-- Connected Car -->
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Connected Car</h3>
+        <p> Services IoT pour suivi véhicule en temps réel, géolocalisation et alertes.</p>
+        <ul class="service-features">
+          <li> Suivi GPS temps réel</li>
+          <li> Alertes maintenance</li>
+          <li> Contrôle à distance</li>
+          <li> Tableau de bord</li>
+        </ul>
+        <div class="service-price">
+          <div class="price">À partir <span>de 10,000 XOF/mois</span></div>
+          <a href="/contact" class="service-btn">En savoir <i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+      
+      <!-- Formation -->
+      <div class="service-card">
+        <div class="service-icon">🎓</div>
+        <h3>Formation & Conseil</h3>
+        <p> Programs de formation pour mécaniciens, entrepreneurs et équipes commerciales.</p>
+        <ul class="service-features">
+          <li> Formation technique</li>
+          <li> Management auto</li>
+          <li> Marketing digital</li>
+          <li> Certification included</li>
+        </ul>
+        <div class="service-price">
+          <div class="price">À partir <span>de 75,000 XOF</span></div>
+          <a href="/contact" class="service-btn">En savoir <i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- AI Features -->
+    <div class="ai-section">
+      <h2>🤖 Services <span>Intelligence Artificielle</span></h2>
+      <p>6 agents IA pour automatiser et optimiser vos opérations</p>
+      
+      <div class="ai-grid">
+        <div class="ai-feature">
+          <div class="ai-feature-icon">💬</div>
+          <h4>Support Client</h4>
+          <p>Chatbot 24/7</p>
+        </div>
+        <div class="ai-feature">
+          <div class="ai-feature-icon">📦</div>
+          <h4>Gestion Commandes</h4>
+          <p>Automatisation</p>
+        </div>
+        <div class="ai-feature">
+          <div class="ai-feature-icon">📊</div>
+          <h4>Analytique</h4>
+          <p>Rapports IA</p>
+        </div>
+        <div class="ai-feature">
+          <div class="ai-feature-icon">📢</div>
+          <h4>Marketing</h4>
+          <p>Campagnes auto</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2>🚀 Prêt à démarrer?</h2>
+      <p>Contactez-nous dès aujourd'hui pour une consultation gratuite et découvrons ensemble comment E-GARRAGE peut transformer votre activité.</p>
+      <div class="cta-buttons">
+        <a href="/contact" class="cta-btn cta-btn-primary">Demander un devis</a>
+        <a href="/blog-market" class="cta-btn cta-btn-secondary">Voir le marché</a>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="footer-logo">E-<span>GARRAGE</span></div>
+    <p>📧 electronbusiness@gmail.com | 📞 +229 01 977 003 47 | 📍 Cotonou, République du Benin</p>
+    <p>© 2024 E-GARRAGE | <a href="/terms">Conditions</a> | <a href="/privacy">Confidentialité</a></p>
+  </footer>
+</body>
+</html>
