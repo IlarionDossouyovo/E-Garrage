@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue Produits - E-GARRAGE</title>
+  <meta name="description" content="Catalogue complet de pièces auto, accessoires et produits automobiles.">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff88;
+      --premium: #ffd700;
+      --dark: #0a0a0f;
+      --dark-secondary: #12121a;
+      --dark-card: #1a1a24;
+      --border: #2a2a3a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+    body { background: var(--dark); color: #fff; }
+    a { text-decoration: none; color: inherit; }
+    
+    /* Header */
+    header { 
+      background: var(--dark-secondary); 
+      border-bottom: 1px solid var(--border); 
+      padding: 1rem 2rem; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; }
+    .logo span { color: var(--neon-blue); }
+    .logo::before { content: '⚡ '; }
+    nav { display: flex; gap: 1.5rem; }
+    nav a { color: #8892a0; transition: 0.3s; padding: 0.5rem 1rem; border-radius: 6px; }
+    nav a:hover, nav a.active { color: var(--neon-blue); background: rgba(0, 212, 255, 0.1); }
+    
+    /* Hero */
+    .hero {
+      background: linear-gradient(180deg, var(--dark), rgba(0, 212, 255, 0.08));
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; letter-spacing: 3px; }
+    .hero h1 span { color: var(--neon-blue); }
+    .hero p { color: #8892a0; margin-top: 1rem; }
+    
+    /* Filters */
+    .filters {
+      background: var(--dark-card);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .filter-container { max-width: 1200px; margin: 0 auto; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .filter-group { display: flex; gap: 0.5rem; align-items: center; }
+    .filter-group label { color: #64748b; font-size: 0.9rem; }
+    .filter-btn {
+      padding: 0.6rem 1.2rem;
+      background: var(--dark-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #a0a8b8;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--neon-blue);
+      color: var(--neon-blue);
+    }
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.5rem;
+      background: var(--dark-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #fff;
+    }
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+    }
+    
+    /* Stats Bar */
+    .stats-bar {
+      background: var(--dark-card);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-item { text-align: center; }
+    .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--neon-blue); }
+    .stat-label { color: #64748b; font-size: 0.85rem; }
+    
+    /* Products Grid */
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .product-card {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .product-card:hover {
+      border-color: var(--neon-blue);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15);
+    }
+    .product-image {
+      height: 180px;
+      background: var(--dark-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+    }
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 0.3rem 0.8rem;
+      background: var(--neon-blue);
+      color: var(--dark);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .product-badge.premium {
+      background: var(--premium);
+    }
+    .product-info { padding: 1.5rem; }
+    .product-category {
+      color: var(--neon-green);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .product-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .product-desc {
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .product-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .price {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      color: var(--neon-blue);
+    }
+    .price-original {
+      font-size: 0.9rem;
+      color: #64748b;
+      text-decoration: line-through;
+      margin-left: 0.5rem;
+    }
+    .add-btn {
+      padding: 0.6rem 1.2rem;
+      background: var(--neon-green);
+      color: var(--dark);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .add-btn:hover { background: var(--neon-blue); }
+    
+    /* Categories Section */
+    .categories-section {
+      padding: 3rem 2rem;
+      background: var(--dark-card);
+    }
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .section-title span { color: var(--neon-blue); }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .category-card {
+      background: var(--dark-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .category-card:hover {
+      border-color: var(--neon-blue);
+      background: rgba(0, 212, 255, 0.1);
+    }
+    .category-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .category-name { font-weight: 600; }
+    .category-count { color: #64748b; font-size: 0.85rem; }
+    
+    /* Footer */
+    footer {
+      background: var(--dark-secondary);
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    footer p { color: #64748b; }
+    footer a { color: var(--neon-blue); }
+    
+    @media (max-width: 768px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      nav { display: none; }
+      .stats-bar { flex-wrap: wrap; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">E-<span>GARRAGE</span></div>
+    <nav>
+      <a href="/">Accueil</a>
+      <a href="/catalog" class="active">Catalogue</a>
+      <a href="/services">Services</a>
+      <a href="/garage-register">Garages</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+  
+  <section class="hero">
+    <h1>Catalogue <span>Produits</span></h1>
+    <p>Pièces auto, accessoires et équipements pour tous véhicules</p>
+  </section>
+  
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-value">200+</div>
+      <div class="stat-label">Produits</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">15</div>
+      <div class="stat-label">Catégories</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">50+</div>
+      <div class="stat-label">Marques</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">24/7</div>
+      <div class="stat-label">Support</div>
+    </div>
+  </div>
+  
+  <!-- Filters -->
+  <div class="filters">
+    <div class="filter-container">
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="filterCategory('all')">Tous</button>
+        <button class="filter-btn" onclick="filterCategory('moteur')">Moteur</button>
+        <button class="filter-btn" onclick="filterCategory('freinage')">Freinage</button>
+        <button class="filter-btn" onclick="filterCategory('electrique')">Électrique</button>
+        <button class="filter-btn" onclick="filterCategory('carrosserie')">Carrosserie</button>
+        <button class="filter-btn" onclick="filterCategory('interieur')">Intérieur</button>
+        <button class="filter-btn" onclick="filterCategory('accessoires')">Accessoires</button>
+      </div>
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Rechercher un produit...">
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="products-grid" id="productsGrid">
+      <!-- Products will be inserted here by JS -->
+    </div>
+  </div>
+  
+  <!-- Categories -->
+  <section class="categories-section">
+    <h2 class="section-title">Nos <span>Catégories</span></h2>
+    <div class="categories-grid">
+      <div class="category-card" onclick="filterCategory('moteur')">
+        <div class="category-icon">⚙️</div>
+        <div class="category-name">Moteur</div>
+        <div class="category-count">45 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('freinage')">
+        <div class="category-icon">🛑</div>
+        <div class="category-name">Freinage</div>
+        <div class="category-count">32 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('electrique')">
+        <div class="category-icon">⚡</div>
+        <div class="category-name">Électrique</div>
+        <div class="category-count">38 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('suspension')">
+        <div class="category-icon">🔩</div>
+        <div class="category-name">Suspension</div>
+        <div class="category-count">28 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('transmission')">
+        <div class="category-icon">⚔️</div>
+        <div class="category-name">Transmission</div>
+        <div class="category-count">22 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('carrosserie')">
+        <div class="category-icon">🚗</div>
+        <div class="category-name">Carrosserie</div>
+        <div class="category-count">35 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('climatisation')">
+        <div class="category-icon">❄️</div>
+        <div class="category-name">Climatisation</div>
+        <div class="category-count">18 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('batterie')">
+        <div class="category-icon">🔋</div>
+        <div class="category-name">Batterie</div>
+        <div class="category-count">15 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('huiles')">
+        <div class="category-icon">🫗</div>
+        <div class="category-name">Huiles</div>
+        <div class="category-count">25 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('pneumatique')">
+        <div class="category-icon">🛞</div>
+        <div class="category-name">Pneumatique</div>
+        <div class="category-count">20 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('interieur')">
+        <div class="category-icon">🪑</div>
+        <div class="category-name">Intérieur</div>
+        <div class="category-count">30 produits</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('accessoires')">
+        <div class="category-icon">🔧</div>
+        <div class="category-name">Accessoires</div>
+        <div class="category-count">50+ produits</div>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="logo">E-<span>GARRAGE</span></div>
+    <p>📧 electronbusiness@gmail.com | 📞 +229 01 977 003 47 | 📍 Cotonou, République du Benin</p>
+    <p>© 2024 E-GARRAGE | <a href="/terms">Conditions</a> | <a href="/privacy">Confidentialité</a></p>
+  </footer>
+  
+  <script>
+    // Sample products data
+    const products = [
+      { id: 1, name: 'Filtre à huile Premium', category: 'moteur', desc: 'Filtre haute performance pour moteur essence et diesel', price: 4500, original: 5500, icon: '🛢️', badge: 'Top' },
+      { id: 2, name: 'Plaquettes de frein AV', category: 'freinage', desc: 'Plaquettes céramiques haute endurance', price: 12500, original: 15000, icon: '🛑', badge: 'Promo' },
+      { id: 3, name: 'Batterie 12V 60Ah', category: 'batterie', desc: 'Batterie démarrage fiable toutes saisons', price: 28000, original: 35000, icon: '🔋', badge: 'Best' },
+      { id: 4, name: 'Amortisseur avant', category: 'suspension', desc: 'Amortisseur gaz pour confort optimal', price: 35000, original: 42000, icon: '🔩', badge: null },
+      { id: 5, name: 'Alternateur 120A', category: 'electrique', desc: 'Alternateur neuf garantie 1 an', price: 45000, icon: '⚡', badge: 'New' },
+      { id: 6, name: 'Kit embrayage', category: 'transmission', desc: 'Kit complet embrayage + disque', price: 38000, original: 45000, icon: '⚔️', badge: 'Promo' },
+      { id: 7, name: 'Liquide de frein DOT4', category: 'freinage', desc: 'Liquide frein synthétique 1L', price: 3500, icon: '🫗', badge: null },
+      { id: 8, name: 'Pneu 185/65R15', category: 'pneumatique', desc: 'Pneu toutes saison marque premium', price: 22000, original: 28000, icon: '🛞', badge: 'Promo' },
+      { id: 9, name: 'Bougies allumage (4pcs)', category: 'moteur', desc: 'Bougies iridium pour performance', price: 8000, original: 10000, icon: '⚡', badge: 'Top' },
+      { id: 10, name: 'Radiateur eau', category: 'moteur', desc: 'Radiateur aluminium neuf', price: 28000, icon: '🌡️', badge: 'New' },
+      { id: 11, name: 'Phares LED xenon', category: 'electrique', desc: 'Kit éclairage LED haute luminosité', price: 35000, original: 45000, icon: '💡', badge: 'Promo' },
+      { id: 12, name: 'Siège-auto premium', category: 'interieur', desc: 'Siège baquet sport noir', price: 55000, icon: '🪑', badge: 'Best' },
+      { id: 13, name: 'Pare-chocs AV', category: 'carrosserie', desc: 'Pare-chocs neuf peinture possible', price: 45000, original: 55000, icon: '🚗', badge: null },
+      { id: 14, name: 'Climatisation récharger', category: 'climatisation', desc: 'Gaz R134a + huile + additif', price: 8000, icon: '❄️', badge: null },
+      { id: 15, name: 'Huile moteur 5W30 (5L)', category: 'huiles', desc: 'Synthétique longue durée', price: 12000, original: 15000, icon: '🫗', badge: 'Promo' },
+      { id: 16, name: 'Jantes alu 15"', category: 'carrosserie', desc: 'Jante alloy silver 5 trous', price: 35000, original: 42000, icon: '⚙️', badge: null },
+    ];
+    
+    function renderProducts(filtered) {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = filtered.map(p => `
+        <div class="product-card">
+          <div class="product-image">
+            ${p.icon}
+            ${p.badge ? `<span class="product-badge ${p.badge === 'Best' || p.badge === 'Premium' ? 'premium' : ''}">${p.badge}</span>` : ''}
+          </div>
+          <div class="product-info">
+            <div class="product-category">${p.category}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-desc">${p.desc}</div>
+            <div class="product-price">
+              <div>
+                <span class="price">${p.price.toLocaleString()} XOF</span>
+                ${p.original ? `<span class="price-original">${p.original.toLocaleString()}</span>` : ''}
+              </div>
+              <button class="add-btn" onclick="addToCart(${p.id})">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function filterCategory(cat) {
+      // Update buttons
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
+      renderProducts(filtered);
+    }
+    
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const search = e.target.value.toLowerCase();
+      const filtered = products.filter(p => 
+        p.name.toLowerCase().includes(search) || 
+        p.desc.toLowerCase().includes(search) ||
+        p.category.includes(search)
+      );
+      renderProducts(filtered);
+    });
+    
+    function addToCart(id) {
+      alert('Produit ajouté au panier! Contact: electronbusiness@gmail.com pour commander.');
+    }
+    
+    // Initial render
+    renderProducts(products);
+  </script>
+</body>
+</html>

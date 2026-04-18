@@ -438,6 +438,10 @@ app.get('/garage-register', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'garage-register.html'));
 });
 
+app.get('/catalog', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'catalog.html'));
+});
+
 // API for garages
 app.get('/api/garages', (req, res) => {
   const garages = JSON.parse(require('fs').readFileSync(path.join(__dirname, 'public', 'garages.json'), 'utf8') || '[]');
