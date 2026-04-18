@@ -422,6 +422,14 @@ app.get('/config', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'config.html'));
 });
 
+app.get('/blog-market', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'blog-market.html'));
+});
+
+app.get('/blog-opportunities', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'blog-opportunities.html'));
+});
+
 // ============ WEBHOOKS API ============
 app.post('/api/webhooks', (req, res) => {
   const { url, events } = req.body;
